@@ -73,7 +73,7 @@ public class WxApplicationAPI {
      */
     public static AppListRes getApplicationList(String accessToken) throws RCodeException{
         AppListRes appListRes = null;
-        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.DEPARTMENT_LIST_URL.replace("ACCESS_TOKEN",accessToken));
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.AGNET_LIST_URL.replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             appListRes = JSON.toJavaObject(jo,AppListRes.class);
