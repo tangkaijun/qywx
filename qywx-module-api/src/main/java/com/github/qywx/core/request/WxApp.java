@@ -23,6 +23,8 @@ public class WxApp {
     private Integer isreportenter;
     //应用主页url。url必须以http或者https开头。
     private String home_url;
+    //企业应用方形头像url
+    private String square_logo_url;
 
     public Integer getAgentid() {
         return agentid;
@@ -86,6 +88,14 @@ public class WxApp {
 
     public void setHome_url(String home_url) {
         this.home_url = home_url;
+    }
+
+    public String getSquare_logo_url() {
+        return square_logo_url;
+    }
+
+    public void setSquare_logo_url(String square_logo_url) {
+        this.square_logo_url = square_logo_url;
     }
 
     @Override

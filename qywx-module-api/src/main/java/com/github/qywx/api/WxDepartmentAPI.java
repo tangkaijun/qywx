@@ -6,6 +6,7 @@ import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
 import com.github.qywx.core.request.WxDepart;
 import com.github.qywx.core.response.Response;
+import com.github.qywx.core.response.wxapp.AppListRes;
 import com.github.qywx.core.response.wxdepart.DepartmentRes;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
@@ -105,10 +106,10 @@ public class WxDepartmentAPI {
             departmentRes = JSON.toJavaObject(jo,DepartmentRes.class);
             int rcode = departmentRes.getErrcode();
             if(rcode!=0){
-                logger.info("查询部门失败", "deleteDepartment params id:{},accessToken:{}, response:{}", new Object[]{id,accessToken,departmentRes});
+                logger.info("查询部门失败", "getDepartmentList params id:{},accessToken:{}, response:{}", new Object[]{id,accessToken,departmentRes});
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("查询部门成功", "deleteDepartment params id:{},accessToken:{}, response:{}", new Object[]{id,accessToken,departmentRes});
+            logger.info("查询部门成功", "getDepartmentList params id:{},accessToken:{}, response:{}", new Object[]{id,accessToken,departmentRes});
         }
         return departmentRes;
     }

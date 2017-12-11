@@ -6,6 +6,7 @@ import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
 import com.github.qywx.core.request.WxApp;
 import com.github.qywx.core.response.Response;
+import com.github.qywx.core.response.wxapp.AppListRes;
 import com.github.qywx.core.response.wxapp.ApplicationRes;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
@@ -63,6 +64,27 @@ public class WxApplicationAPI {
             logger.info("设置应用成功", "setApplication params wxApp:{},accessToken:{}, response:{}", new Object[]{wxApp,accessToken,response});
         }
         return response;
+    }
+
+    /**
+     * @param accessToken  调用接口凭证
+     * @return
+     * @throws RCodeException
+     */
+    public static AppListRes getApplicationList(String accessToken) throws RCodeException{
+        AppListRes appListRes = null;
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.DEPARTMENT_LIST_URL.replace("ACCESS_TOKEN",accessToken));
+        if(httpResult.getStatus()==200){
+            JSONObject jo =JSON.parseObject(httpResult.getData());
+            appListRes = JSON.toJavaObject(jo,AppListRes.class);
+            int rcode = appListRes.getErrcode();
+            if(rcode!=0){
+                logger.info("获取应用列表失败", "getApplicationList params accessToken:{}, response:{}", new Object[]{accessToken,appListRes});
+                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+            }
+            logger.info("获取应用列表成功", "getApplicationList params accessToken:{}, response:{}", new Object[]{accessToken,appListRes});
+        }
+        return appListRes;
     }
 
 }
