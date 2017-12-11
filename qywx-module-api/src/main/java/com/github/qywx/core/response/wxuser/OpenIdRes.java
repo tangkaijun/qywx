@@ -1,5 +1,6 @@
 package com.github.qywx.core.response.wxuser;
 
+import com.alibaba.fastjson.JSON;
 import com.github.qywx.core.response.Response;
 
 /**
@@ -7,6 +8,7 @@ import com.github.qywx.core.response.Response;
  */
 public class OpenIdRes extends Response {
 
+    //opeid
     private String openid;
     private String appid;
 
@@ -25,4 +27,10 @@ public class OpenIdRes extends Response {
     public void setAppid(String appid) {
         this.appid = appid;
     }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
 }

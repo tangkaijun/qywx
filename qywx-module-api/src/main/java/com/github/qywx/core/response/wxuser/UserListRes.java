@@ -1,5 +1,6 @@
 package com.github.qywx.core.response.wxuser;
 
+import com.alibaba.fastjson.JSON;
 import com.github.qywx.core.response.Response;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
  */
 public class UserListRes extends Response {
 
+    //用户列表
     private List<WxUserRes> userlist;
 
     public List<WxUserRes> getUserlist() {
@@ -21,10 +23,6 @@ public class UserListRes extends Response {
 
     @Override
     public String toString() {
-        return "UserListRes{" +
-                "errcode=" + errcode +
-                ", userlist=" + userlist +
-                ", errmsg='" + errmsg + '\'' +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

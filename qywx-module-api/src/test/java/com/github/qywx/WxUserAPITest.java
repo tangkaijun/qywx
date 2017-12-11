@@ -16,7 +16,7 @@ public class WxUserAPITest {
     public void testCreateUser(){
         AccessToken accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","zOfT-aTOL5gTRdUWTs76VLHWzV-m43N82ut7qWakuPM");
         WxUserRes wxUserRes = WxUserAPI.getUser("yyzq571856518",accessToken.getAccess_token());
-        System.out.println(JSON.toJSONString(wxUserRes));
+        System.out.println(wxUserRes);
     }
 
 }

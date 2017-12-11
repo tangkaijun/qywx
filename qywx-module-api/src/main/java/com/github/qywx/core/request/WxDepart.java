@@ -1,5 +1,7 @@
 package com.github.qywx.core.request;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * Created by kaijun on 2017/12/10.
  */
@@ -44,5 +46,10 @@ public class WxDepart {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

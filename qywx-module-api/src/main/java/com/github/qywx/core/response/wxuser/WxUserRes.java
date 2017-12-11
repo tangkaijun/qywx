@@ -1,5 +1,6 @@
 package com.github.qywx.core.response.wxuser;
 
+import com.alibaba.fastjson.JSON;
 import com.github.qywx.core.response.Response;
 
 import java.util.List;
@@ -166,22 +167,6 @@ public class WxUserRes extends Response {
 
     @Override
     public String toString() {
-        return "WxUserRes{" +
-                "errcode=" + errcode +
-                ", errmsg='" + errmsg + '\'' +
-                ", userid='" + userid + '\'' +
-                ", name='" + name + '\'' +
-                ", english_name='" + english_name + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", department=" + department +
-                ", order=" + order +
-                ", position='" + position + '\'' +
-                ", gender='" + gender + '\'' +
-                ", email='" + email + '\'' +
-                ", isleader=" + isleader +
-                ", telephone='" + telephone + '\'' +
-                ", extattr=" + extattr +
-                ", status=" + status +
-                '}';
+        return JSON.toJSONString(this);
     }
 }
