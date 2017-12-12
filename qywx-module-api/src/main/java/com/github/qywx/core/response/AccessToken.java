@@ -1,5 +1,7 @@
 package com.github.qywx.core.response;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * Created by kaijun on 2017/12/10.
  */
@@ -28,11 +30,6 @@ public class AccessToken extends Response {
 
     @Override
     public String toString() {
-        return "AccessToken{" +
-                "errcode=" + errcode +
-                ", access_token='" + access_token + '\'' +
-                ", errmsg='" + errmsg + '\'' +
-                ", expires_in=" + expires_in +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

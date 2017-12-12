@@ -15,6 +15,8 @@ public class Message {
      private String msgtype;
      //企业应用的id，整型。可在应用的设置页面查看
      private  Integer agentid;
+     //
+     private Integer safe;
 
     public String getTouser() {
         return touser;
@@ -54,5 +56,13 @@ public class Message {
 
     public void setAgentid(Integer agentid) {
         this.agentid = agentid;
+    }
+
+    public Integer getSafe() {
+        return safe;
+    }
+
+    public void setSafe(Integer safe) {
+        this.safe = safe;
     }
 }

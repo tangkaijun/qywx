@@ -1,5 +1,7 @@
 package com.github.qywx.core.response;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * Created by kaijun on 2017/12/10.
  */
@@ -24,5 +26,10 @@ public class Response {
 
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

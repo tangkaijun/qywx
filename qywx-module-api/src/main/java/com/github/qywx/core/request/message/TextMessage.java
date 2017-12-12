@@ -9,6 +9,10 @@ public class TextMessage extends Message {
     private Text text;
     private Integer safe;
 
+    public static Text createText(String content){
+        return new Text(content);
+    }
+
     public Text getText() {
         return text;
     }
@@ -26,6 +30,10 @@ public class TextMessage extends Message {
     }
 
     static class Text {
+
+        public Text(String content){
+            this.content = content;
+        }
 
         private String content;
 
