@@ -1,5 +1,8 @@
 package com.github.qywx.utils.httpclient;
 
+/**
+ * 普通Http/Https请求响应
+ */
 public class HttpResult {
     /**
      * 状态码

@@ -113,7 +113,4 @@ public class WxAPI {
     //审批打卡数据(post)
     public final static String CHECKIN_APPROVAL_DATA_URL = "https://qyapi.weixin.qq.com/cgi-bin/corp/getapprovaldata?access_token=ACCESS_TOKEN";
 
-
-
-
 }

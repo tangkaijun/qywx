@@ -20,7 +20,7 @@ public class WxMessageAPI {
 
     private static Logger logger = LoggerFactory.getLogger(WxMessageAPI.class);
 
-    /**
+    /**消息发送，可以支持多种类型消息发送
      * @param message    消息实体
      * @param accessToken 调用接口凭证
      * @return
