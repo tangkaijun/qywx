@@ -21,4 +21,5 @@ public class RCodeException extends RuntimeException {
     public String getMessage() {
         return "code："+this.code+"   description："+this.msg;
     }
+
 }

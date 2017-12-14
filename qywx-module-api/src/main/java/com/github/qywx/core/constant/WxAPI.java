@@ -90,7 +90,7 @@ public class WxAPI {
     /**********--------------------------------第四部分消息推送---------------------------***********************************/
     /**发送消息（post）*/
     public final static String MESSAGE_SEND_URL = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN";
-
+    public final static String MESSAGE_SER_IP_URL = "https://qyapi.weixin.qq.com/cgi-bin/getcallbackip?access_token=ACCESS_TOKEN";
     /********---------------------------------第五部分素材管理----------------------------***********************************/
     //上传临时素材(post)
     public final static String MEDIA_UPLOAD_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";

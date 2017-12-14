@@ -1,6 +1,7 @@
 package com.github.qywx.api;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
@@ -11,6 +12,10 @@ import com.github.qywx.utils.httpclient.HttpClientUtils;
 import com.github.qywx.utils.httpclient.HttpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kjtang on 2017/12/12.
@@ -42,4 +47,30 @@ public class WxMessageAPI {
         }
         return messageRes;
     }
+
+    /**
+     * 获取企业微信服务器IP
+     * @param accessToken
+     * @return
+     * @throws RCodeException
+     */
+    public static List<String> getWxServerIps(String accessToken) throws RCodeException{
+        List<String> ips = new ArrayList<>();
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MESSAGE_SER_IP_URL.replace("ACCESS_TOKEN",accessToken));
+        if(httpResult.getStatus()==200){
+            System.out.println(httpResult.getData());
+            JSONObject jo = JSON.parseObject(httpResult.getData());
+            Integer code = jo.getInteger("errcode");
+            System.out.println(code);
+            if(code!=0){
+                logger.info("获取微信服务ip失败", "createMenu params accessToken:{}, response:{}", new Object[]{accessToken,ips});
+                throw new RCodeException(code, WxRCode.getErrorMsg(code));
+            }
+            JSONArray jsonArray = jo.getJSONArray("ip_list");
+            ips = jsonArray.toJavaList(String.class);
+            logger.info("获取微信服务ip成功", "createMenu params accessToken:{}, response:{}", new Object[]{accessToken,ips});
+        }
+        return ips;
+    }
+
 }
