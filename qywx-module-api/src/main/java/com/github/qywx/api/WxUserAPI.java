@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
-import com.github.qywx.core.request.WxUser;
+import com.github.qywx.core.request.User;
 import com.github.qywx.core.response.*;
-import com.github.qywx.core.response.wxuser.OpenIdRes;
-import com.github.qywx.core.response.wxuser.UserIdRes;
-import com.github.qywx.core.response.wxuser.UserListRes;
-import com.github.qywx.core.response.wxuser.WxUserRes;
+import com.github.qywx.core.response.user.OpenIdRes;
+import com.github.qywx.core.response.user.UserIdRes;
+import com.github.qywx.core.response.user.UserListResp;
+import com.github.qywx.core.response.user.WxUserRes;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
 import com.github.qywx.utils.httpclient.HttpResult;
@@ -34,7 +34,7 @@ public class WxUserAPI {
      *  wxUser:用户信息实体
      *  accessToken:访问token
      * */
-    public static Response createUser(WxUser wxUser,String accessToken) throws RCodeException{
+    public static Response createUser(User wxUser, String accessToken) throws RCodeException{
            Response response = null;
             String wxUserJson = JSON.toJSONString(wxUser);
             HttpResult httpResult = HttpClientUtils.doPost(WxAPI.USER_CREATE_URL.replace("ACCESS_TOKEN", accessToken), wxUserJson);
@@ -79,7 +79,7 @@ public class WxUserAPI {
      * @return
      * @throws RCodeException
      */
-    public static Response updateUser(WxUser wxUser,String accessToken) throws RCodeException{
+    public static Response updateUser(User wxUser, String accessToken) throws RCodeException{
         Response response = null;
         String wxUserJson = JSON.toJSONString(wxUser);
         HttpResult httpResult = HttpClientUtils.doPost(WxAPI.USER_UPDATE_URL.replace("ACCESS_TOKEN", accessToken), wxUserJson);
@@ -128,7 +128,7 @@ public class WxUserAPI {
         Map map = new HashMap();
         map.put("useridlist",userids);
         String jsonMap = JSON.toJSONString(map);
-        HttpResult httpResult = HttpClientUtils.doPost(WxAPI.USER_DELETE_URL.replace("ACCESS_TOKEN", accessToken),jsonMap);
+        HttpResult httpResult = HttpClientUtils.doPost(WxAPI.USER_BATCH_DELETE_URL.replace("ACCESS_TOKEN", accessToken),jsonMap);
         if (httpResult.getStatus() == 200) {
             JSONObject jsonObject = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jsonObject,Response.class);
@@ -149,12 +149,12 @@ public class WxUserAPI {
      * @return
      * @throws RCodeException
      */
-    public static UserListRes getUserSimpleList(Integer departmentId, boolean fetchChild, String accessToken) throws RCodeException{
-        UserListRes userListRes = null;
+    public static UserListResp getUserSimpleList(Integer departmentId, boolean fetchChild, String accessToken) throws RCodeException{
+        UserListResp userListRes = null;
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.USER__SIMPLELIST_URl.replace("DEPARTMENT_ID",String.valueOf(departmentId)).replace("FETCH_CHILD",fetchChild?"1":"0").replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jsonObject = JSON.parseObject(httpResult.getData());
-            userListRes = JSON.toJavaObject(jsonObject,UserListRes.class);
+            userListRes = JSON.toJavaObject(jsonObject,UserListResp.class);
             int rcode = userListRes.getErrcode();
             if(rcode!=0){
                 logger.info("获取成员失败", "getUserSimpleList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});
@@ -172,12 +172,12 @@ public class WxUserAPI {
      * @return
      * @throws RCodeException
      */
-    public static UserListRes getUserList(Integer departmentId, boolean fetchChild, String accessToken) throws RCodeException{
-        UserListRes userListRes = null;
+    public static UserListResp getUserList(Integer departmentId, boolean fetchChild, String accessToken) throws RCodeException{
+        UserListResp userListRes = null;
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.USER_LIST_URL.replace("DEPARTMENT_ID",String.valueOf(departmentId)).replace("FETCH_CHILD",fetchChild?"1":"0").replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jsonObject = JSON.parseObject(httpResult.getData());
-            userListRes = JSON.toJavaObject(jsonObject,UserListRes.class);
+            userListRes = JSON.toJavaObject(jsonObject,UserListResp.class);
             int rcode = userListRes.getErrcode();
             if(rcode!=0){
                 logger.info("获取成员详细信息失败", "getUserList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});

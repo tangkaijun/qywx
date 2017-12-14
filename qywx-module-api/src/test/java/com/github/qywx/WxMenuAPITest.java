@@ -2,9 +2,9 @@ package com.github.qywx;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.api.WxMenuAPI;
-import com.github.qywx.core.request.wxmenu.ComplexButton;
-import com.github.qywx.core.request.wxmenu.Menu;
-import com.github.qywx.core.request.wxmenu.SimpleButton;
+import com.github.qywx.core.request.menu.ComplexButton;
+import com.github.qywx.core.request.menu.Menu;
+import com.github.qywx.core.request.menu.SimpleButton;
 import com.github.qywx.core.response.AccessToken;
 import org.junit.Test;
 

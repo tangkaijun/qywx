@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
-import com.github.qywx.core.request.WxApp;
+import com.github.qywx.core.request.Application;
 import com.github.qywx.core.response.Response;
-import com.github.qywx.core.response.wxapp.AppListRes;
-import com.github.qywx.core.response.wxapp.ApplicationRes;
+import com.github.qywx.core.response.application.AppListResp;
+import com.github.qywx.core.response.application.ApplicationResp;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
 import com.github.qywx.utils.httpclient.HttpResult;
@@ -27,12 +27,12 @@ public class WxApplicationAPI {
      * @return
      * @throws RCodeException
      */
-    public static ApplicationRes getApplication(Integer agentid, String accessToken) throws RCodeException{
-        ApplicationRes applicationRes = null;
+    public static ApplicationResp getApplication(Integer agentid, String accessToken) throws RCodeException{
+        ApplicationResp applicationRes = null;
         HttpResult httpResult  = HttpClientUtils.doGet(WxAPI.AGENT_GET_URL.replace("AGENTID",String.valueOf(agentid)).replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
-            applicationRes = JSON.toJavaObject(jo,ApplicationRes.class);
+            applicationRes = JSON.toJavaObject(jo,ApplicationResp.class);
             int rcode = applicationRes.getErrcode();
             if(rcode!=0){
                 logger.info("获取应用失败", "getApplication params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,applicationRes});
@@ -49,7 +49,7 @@ public class WxApplicationAPI {
      * @return            状态信息
      * @throws RCodeException
      */
-    public static Response setApplication(WxApp wxApp,String accessToken) throws RCodeException{
+    public static Response setApplication(Application wxApp, String accessToken) throws RCodeException{
         Response response = null;
         String json = JSON.toJSONString(wxApp);
         HttpResult httpResult = HttpClientUtils.doPost(WxAPI.AGENT_SET_URL.replace("ACCESS_TOKEN",accessToken),json);
@@ -71,12 +71,12 @@ public class WxApplicationAPI {
      * @return
      * @throws RCodeException
      */
-    public static AppListRes getApplicationList(String accessToken) throws RCodeException{
-        AppListRes appListRes = null;
+    public static AppListResp getApplicationList(String accessToken) throws RCodeException{
+        AppListResp appListRes = null;
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.AGNET_LIST_URL.replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
-            appListRes = JSON.toJavaObject(jo,AppListRes.class);
+            appListRes = JSON.toJavaObject(jo,AppListResp.class);
             int rcode = appListRes.getErrcode();
             if(rcode!=0){
                 logger.info("获取应用列表失败", "getApplicationList params accessToken:{}, response:{}", new Object[]{accessToken,appListRes});

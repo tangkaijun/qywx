@@ -180,7 +180,6 @@ public class WxRCode {
         statusMap.put(301036,"不允许更新该用户的userid");
         statusMap.put(302004,"组织架构不合法（1不是一棵树，2 多个一样的partyid，3 partyid空，4 partyid name 空，5 同一个父节点下有两个子节点 部门名字一样 可能是以上情况，请一一排查）");
         statusMap.put(2000002,"CorpId参数无效");
-
     }
 
     public static String getErrorMsg(int code){

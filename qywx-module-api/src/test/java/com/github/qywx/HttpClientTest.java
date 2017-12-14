@@ -14,4 +14,5 @@ public class HttpClientTest {
         HttpResult httpResult = HttpClientUtils.doGet("https://www.baidu.com");
         System.out.println(httpResult.getData());
     }
+
 }

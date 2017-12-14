@@ -4,10 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
-import com.github.qywx.core.request.WxDepart;
+import com.github.qywx.core.request.Department;
 import com.github.qywx.core.response.Response;
-import com.github.qywx.core.response.wxapp.AppListRes;
-import com.github.qywx.core.response.wxdepart.DepartmentRes;
+import com.github.qywx.core.response.department.DepartmentResp;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
 import com.github.qywx.utils.httpclient.HttpResult;
@@ -30,10 +29,10 @@ public class WxDepartmentAPI {
      * @return            返回创建部门的id
      * @throws RCodeException
      */
-    public static Integer createDepartment(WxDepart wxDepart,String accessToken) throws RCodeException{
+    public static Integer createDepartment(Department wxDepart, String accessToken) throws RCodeException{
         int id = 0;
         String json = JSON.toJSONString(wxDepart);
-        HttpResult httpResult =  HttpClientUtils.doPost(WxAPI.DEPARTMENT_CREATE_URL.replace("",accessToken),json);
+        HttpResult httpResult =  HttpClientUtils.doPost(WxAPI.DEPARTMENT_CREATE_URL.replace("ACCESS_TOKEN",accessToken),json);
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             int rcode = jo.getInteger("errcode");
@@ -53,7 +52,7 @@ public class WxDepartmentAPI {
      * @return
      * @throws RCodeException
      */
-    public static Response updateDepartment(WxDepart wxDepart,String accessToken) throws RCodeException{
+    public static Response updateDepartment(Department wxDepart, String accessToken) throws RCodeException{
         Response response = null;
         String json = JSON.toJSONString(wxDepart);
         HttpResult httpResult =  HttpClientUtils.doPost(WxAPI.DEPARTMENT_UPDATE_URL.replace("ACCESS_TOKEN",accessToken),json);
@@ -78,7 +77,7 @@ public class WxDepartmentAPI {
      */
     public static Response deleteDepartment(Integer id,String accessToken) throws RCodeException{
         Response response = null;
-        HttpResult httpResult =  HttpClientUtils.doGet(WxAPI.DEPARTMENT_UPDATE_URL.replace("ACCESS_TOKEN",accessToken).replace("ID",String.valueOf(id)));
+        HttpResult httpResult =  HttpClientUtils.doGet(WxAPI.DEPARTMENT_DELETE_URL.replace("ACCESS_TOKEN",accessToken).replace("ID",String.valueOf(id)));
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
@@ -98,12 +97,12 @@ public class WxDepartmentAPI {
      * @return
      * @throws RCodeException
      */
-    public static DepartmentRes getDepartmentList(Integer id, String accessToken) throws RCodeException{
-        DepartmentRes departmentRes = null;
+    public static DepartmentResp getDepartmentList(Integer id, String accessToken) throws RCodeException{
+        DepartmentResp departmentRes = null;
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.DEPARTMENT_LIST_URL.replace("ID",String.valueOf(id)).replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
-            departmentRes = JSON.toJavaObject(jo,DepartmentRes.class);
+            departmentRes = JSON.toJavaObject(jo,DepartmentResp.class);
             int rcode = departmentRes.getErrcode();
             if(rcode!=0){
                 logger.info("查询部门失败", "getDepartmentList params id:{},accessToken:{}, response:{}", new Object[]{id,accessToken,departmentRes});
