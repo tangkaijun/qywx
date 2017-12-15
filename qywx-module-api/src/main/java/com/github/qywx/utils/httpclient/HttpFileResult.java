@@ -25,8 +25,9 @@ public class HttpFileResult extends HttpResult{
         try {
             if (entity != null) {
                 InputStream is = entity.getContent();
-                File file = new File(targetUrl);
-                FileOutputStream fos = new FileOutputStream(file);
+                String filename = String.valueOf(System.currentTimeMillis());
+                File file = new File(targetUrl,filename);
+                FileOutputStream fos = new FileOutputStream(file,true);
                 byte[] buffer = new byte[4096];
                 int len = -1;
                 while ((len = is.read(buffer)) != -1) {

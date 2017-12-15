@@ -1,76 +1,71 @@
 package com.github.qywx.core.request.message;
 
 /**
- * Created by kaijun on 2017/12/11.
+ * 以xml格式并加密处理发送
+ * Created by 接收消息的基类 on 2017/12/14.
+ * 消息流向:（普通用户 -> 企业微信）
  */
 public class Message {
 
-    public static String MESSAGE_TYPE_TEXT  = "text";  //文本类消息
-    public static String MESSAGE_TYPE_IMAGE = "image";//图片类消息
-    public static String MESSAGE_TYPE_VOICE = "voice";//语音类消息
-    public static String MESSAGE_TYPE_VIDEO = "video";//视频类消息
-    public static String MESSAGE_TYPE_FILE  = "file"; //文件类消息
-    public static String MESSAGE_TYPE_TEXTCARD = "textcard";//文本卡片类消息
-    public static String MESSAGE_TYPE_MPNEWS  = "mpnews";  //图文类消息
+    // 开发者微信号
+    private String ToUserName;
+    // 发送方帐号（一个OpenID）
+    private String FromUserName;
+    // 消息创建时间 （整型）
+    private Long CreateTime;
+    // 消息类型（text/image/location/link）
+    private String MsgType;
+    // 消息id，64位整型
+    private Long MsgId;
+    //企业应用的id，整型。可在应用的设置页面查看
+    private Integer AgentID;
 
-     //成员ID列表（消息接收者，多个接收者用‘|’分隔，最多支持1000个）。特殊情况：指定为@all，则向关注该企业应用的全部成员发送
-     private String touser;
-     //部门ID列表，多个接收者用‘|’分隔，最多支持100个。当touser为@all时忽略本参数
-     private String toparty;
-     //标签ID列表，多个接收者用‘|’分隔，最多支持100个。当touser为@all时忽略本参数
-     private String totag;
-     //消息类型，此时固定为：news
-     private String msgtype;
-     //企业应用的id，整型。可在应用的设置页面查看
-     private  Integer agentid;
-     //
-     private Integer safe;
-
-    public String getTouser() {
-        return touser;
+    public String getToUserName() {
+        return ToUserName;
     }
 
-    public void setTouser(String touser) {
-        this.touser = touser;
+    public void setToUserName(String toUserName) {
+        ToUserName = toUserName;
     }
 
-    public String getToparty() {
-        return toparty;
+    public String getFromUserName() {
+        return FromUserName;
     }
 
-    public void setToparty(String toparty) {
-        this.toparty = toparty;
+    public void setFromUserName(String fromUserName) {
+        FromUserName = fromUserName;
     }
 
-    public String getTotag() {
-        return totag;
+    public Long getCreateTime() {
+        return CreateTime;
     }
 
-    public void setTotag(String totag) {
-        this.totag = totag;
+    public void setCreateTime(Long createTime) {
+        CreateTime = createTime;
     }
 
-    public String getMsgtype() {
-        return msgtype;
+    public String getMsgType() {
+        return MsgType;
     }
 
-    public void setMsgtype(String msgtype) {
-        this.msgtype = msgtype;
+    public void setMsgType(String msgType) {
+        MsgType = msgType;
     }
 
-    public Integer getAgentid() {
-        return agentid;
+    public Long getMsgId() {
+        return MsgId;
     }
 
-    public void setAgentid(Integer agentid) {
-        this.agentid = agentid;
+    public void setMsgId(Long msgId) {
+        MsgId = msgId;
     }
 
-    public Integer getSafe() {
-        return safe;
+    public Integer getAgentID() {
+        return AgentID;
     }
 
-    public void setSafe(Integer safe) {
-        this.safe = safe;
+    public void setAgentID(Integer agentID) {
+        AgentID = agentID;
     }
+
 }

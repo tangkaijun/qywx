@@ -1,48 +1,21 @@
 package com.github.qywx.core.request.message;
 
 /**
- * Created by kaijun on 2017/12/11.
- * 文本信息
+ * Created by kjtang on 2017/12/14.
+ * 接收文本消息
  */
 public class TextMessage extends Message {
 
-    private Text text;
-    private Integer safe;
+    // 消息内容
+    private String Content;
 
-    public static Text createText(String content){
-        return new Text(content);
+    public String getContent() {
+        return Content;
     }
 
-    public Text getText() {
-        return text;
+    public void setContent(String content) {
+        Content = content;
     }
 
-    public void setText(Text text) {
-        this.text = text;
-    }
 
-    public Integer getSafe() {
-        return safe;
-    }
-
-    public void setSafe(Integer safe) {
-        this.safe = safe;
-    }
-
-    static class Text {
-
-        public Text(String content){
-            this.content = content;
-        }
-
-        private String content;
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-    }
 }

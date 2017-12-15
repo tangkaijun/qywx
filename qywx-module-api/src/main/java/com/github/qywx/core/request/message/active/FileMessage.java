@@ -1,8 +1,7 @@
-package com.github.qywx.core.request.message;
+package com.github.qywx.core.request.message.active;
 
 /**
  * Created by kjtang on 2017/12/12.
- * 文件类消息
  */
 public class FileMessage extends Message{
 

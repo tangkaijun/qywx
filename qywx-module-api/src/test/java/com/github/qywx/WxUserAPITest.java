@@ -5,6 +5,8 @@ import com.github.qywx.api.WxUserAPI;
 import com.github.qywx.core.request.User;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.Response;
+import com.github.qywx.core.response.user.OpenIdRes;
+import com.github.qywx.core.response.user.UserIdRes;
 import com.github.qywx.core.response.user.UserListResp;
 import com.github.qywx.core.response.user.WxUserRes;
 import org.junit.Before;
@@ -112,18 +114,20 @@ public class WxUserAPITest {
      */
     @Test
     public void testUseridToOpenId() throws Exception{
-        WxUserAPI.userIdToOpenid("yyzq571856518",null,accessToken.getAccess_token());
+        OpenIdRes openIdRes =  WxUserAPI.userIdToOpenid("khtang",null,accessToken.getAccess_token());
+        System.out.println(openIdRes);//ovI640cG9DyixVPPGEtL1PHwKW94
     }
 
     @Test
     public void testOpenIdToUserId() throws Exception{
-        WxUserAPI.openIdToUserId("34943kk43kkkkkk",accessToken.getAccess_token());
+        UserIdRes userIdRes= WxUserAPI.openIdToUserId("ovI640cG9DyixVPPGEtL1PHwKW94",accessToken.getAccess_token());
+        System.out.println(userIdRes);
     }
 
     //二次验证yoghurt
     @Test
     public void testAuthUser() throws Exception{
-        WxUserAPI.authUser("yyzq571856518",accessToken.getAccess_token());
+        WxUserAPI.authUser("khtang",accessToken.getAccess_token());
     }
 
 }

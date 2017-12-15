@@ -1,42 +1,30 @@
 package com.github.qywx.core.request.message;
 
 /**
- * Created by kjtang on 2017/12/12.
- * 图片类消息
+ * Created by kjtang on 2017/12/14.
+ * 图片消息
  */
-public class ImageMessage extends Message{
+public class ImageMessage extends Message {
 
-    private Integer safe;
+    // 图片链接
+    private String PicUrl;
+    // 图片媒体文件id，可以调用获取媒体文件接口拉取
+    private String MediaId;
 
-    private Image image;
-
-    public Integer getSafe() {
-        return safe;
+    public String getPicUrl() {
+        return PicUrl;
     }
 
-    public void setSafe(Integer safe) {
-        this.safe = safe;
+    public void setPicUrl(String picUrl) {
+        PicUrl = picUrl;
     }
 
-    public Image getImage() {
-        return image;
+    public String getMediaId() {
+        return MediaId;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    static class Image{
-
-        private String media_id;
-
-        public String getMedia_id() {
-            return media_id;
-        }
-
-        public void setMedia_id(String media_id) {
-            this.media_id = media_id;
-        }
+    public void setMediaId(String mediaId) {
+        MediaId = mediaId;
     }
 
 }

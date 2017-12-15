@@ -1,31 +1,30 @@
 package com.github.qywx.core.request.message;
 
 /**
- * Created by kjtang on 2017/12/12.
+ * Created by kjtang on 2017/12/14.
  * 语音类消息
  */
-public class VoiceMessage {
+public class VoiceMessage extends Message {
 
-    private Voice voice;
+    // 语音媒体文件id，可以调用获取媒体文件接口拉取数据
+    private String MediaId;
+    // 语音格式，如amr，speex等
+    private String Format;
 
-    public Voice getVoice() {
-        return voice;
+    public String getMediaId() {
+        return MediaId;
     }
 
-    public void setVoice(Voice voice) {
-        this.voice = voice;
+    public void setMediaId(String mediaId) {
+        MediaId = mediaId;
     }
 
-    static class Voice{
-
-         private String media_id;
-
-        public String getMedia_id() {
-            return media_id;
-        }
-
-        public void setMedia_id(String media_id) {
-            this.media_id = media_id;
-        }
+    public String getFormat() {
+        return Format;
     }
+
+    public void setFormat(String format) {
+        Format = format;
+    }
+
 }

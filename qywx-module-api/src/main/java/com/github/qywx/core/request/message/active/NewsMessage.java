@@ -1,4 +1,4 @@
-package com.github.qywx.core.request.message;
+package com.github.qywx.core.request.message.active;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * Created by kjtang on 2017/12/12.
  * 图文消息
  */
-public class NewsMessage {
+public class NewsMessage extends Message {
 
     private News news;
 

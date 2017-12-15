@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
+import com.github.qywx.core.request.material.News;
 import com.github.qywx.core.response.Response;
 import com.github.qywx.core.response.media.MediaRes;
 import com.github.qywx.exception.RCodeException;
@@ -60,6 +61,47 @@ public class WxMediaAPI {
             throw new RCodeException(response.getErrcode(), WxRCode.getErrorMsg(response.getErrcode()));
         }
         logger.info("文件下载成功", "mediaDownload params localUrl:{},media_id:{},accessToken:{}", new Object[]{localUrl,media_id,accessToken});
+        return response;
+    }
+
+    /**
+     * 删除永久图文素材
+     * @return
+     * @throws RCodeException
+     */
+    public static MediaRes mpNewsUpload(News news, String accessToken) throws RCodeException{
+        MediaRes mediaRes = null;
+        String json = JSON.toJSONString(news);
+        HttpResult httpResult = HttpClientUtils.doPost(WxAPI.MEDIA_UPLOAD_MPNEWS_URL.replace("ACCESS_TOKEN",accessToken),json);
+        System.out.println(JSON.toJSONString(httpResult));
+        if(httpResult.getStatus()!=200){
+            JSONObject jo = JSON.parseObject(httpResult.getData());
+            mediaRes = JSON.toJavaObject(jo,MediaRes.class);
+            logger.info("删除永久图文素材失败", "mediaDownload params mpnews:{},accessToken:{}, response:{}", new Object[]{news,accessToken,mediaRes});
+            throw new RCodeException(mediaRes.getErrcode(), WxRCode.getErrorMsg(mediaRes.getErrcode()));
+        }
+        logger.info("删除永久图文素材成功", "mediaDownload params mpnews:{},accessToken:{},response:{}", new Object[]{news,accessToken,mediaRes});
+        return mediaRes;
+    }
+
+    /**
+     * 永久素材
+     * @param media_id
+     * @param accessToken
+     * @return
+     * @throws Exception
+     */
+    public static Response deleteMedia(String media_id,String accessToken) throws Exception{
+        Response response = null;
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MEDIA_DELETE_URL.replace("ACCESS_TOKEN",accessToken));
+        System.out.println(JSON.toJSONString(httpResult));
+        JSONObject jo = JSON.parseObject(httpResult.getData());
+        response = JSON.toJavaObject(jo,Response.class);
+        if(httpResult.getStatus()==200){
+            logger.info("删除永久图文素材失败", "deleteMedia params mpnews:{},accessToken:{}, response:{}", new Object[]{media_id,accessToken,response});
+            throw new RCodeException(response.getErrcode(), WxRCode.getErrorMsg(response.getErrcode()));
+        }
+        logger.info("删除永久图文素材成功", "deleteMedia params mpnews:{},accessToken:{},response:{}", new Object[]{media_id,accessToken,response});
         return response;
     }
 

@@ -1,10 +1,10 @@
-package com.github.qywx.core.request.message;
+package com.github.qywx.core.request.message.active;
 
 /**
  * Created by kjtang on 2017/12/12.
  * 文本卡片消息
  */
-public class TextCardMessage {
+public class TextCardMessage extends Message{
 
     private TextCard textcard;
 
@@ -16,6 +16,10 @@ public class TextCardMessage {
         this.textcard = textcard;
     }
 
+    public static TextCard createTextCard(String title,String description,String url,String btntxt){
+        return new TextCard(title,description,url,btntxt);
+    }
+
     static class TextCard{
         //标题，不超过128个字节，超过会自动截断
         private String title;
@@ -25,6 +29,13 @@ public class TextCardMessage {
         private String url;
         //按钮文字。 默认为“详情”， 不超过4个文字，超过自动截断。
         private String btntxt;
+
+        public TextCard(String title,String description,String url,String btntxt){
+            this.title = title;
+            this.description = description;
+            this.url = url;
+            this.btntxt = btntxt;
+        }
 
         public String getTitle() {
             return title;

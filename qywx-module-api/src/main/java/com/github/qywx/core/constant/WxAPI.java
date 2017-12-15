@@ -10,8 +10,10 @@ public class WxAPI {
 
 
     /***********----------------------------第一部分企业微信核心API获取AccessToken----------------------------------*****/
+    ////获取access_token的接口地址（GET） 限200（次/天）
     public final static String TOKEN_GET_URL  = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ID&corpsecret=SECRECT";
-
+    //获取jsapi_ticket的接口地址（GET） 限200（次/天）
+    public final static String JSAPI_TICKET_URL = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=ACCESSTOKEN";
 
     /*************--------------------------第二部分通讯录管理-------------------------------------**********************/
     /**成员管理*/
@@ -96,6 +98,12 @@ public class WxAPI {
     public final static String MEDIA_UPLOAD_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
     //获取临时素材（get）
     public final static String MEDIA_GET_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+    //上传永久图文素材
+    public final static String MEDIA_UPLOAD_MPNEWS_URL = "https://qyapi.weixin.qq.com/cgi-bin/material/add_mpnews?access_token=ACCESS_TOKEN";
+    //删除其他类型永久素材，例如，PPT,doc,视频，图片等
+    public final static String MEDIA_UPLOAD_OTHER_URL= "https://qyapi.weixin.qq.com/cgi-bin/material/add_material?type=TYPE&access_token=ACCESS_TOKEN";
+    //删除永久素材
+    public final static String MEDIA_DELETE_URL = "https://qyapi.weixin.qq.com/cgi-bin/material/del?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
 
     /********---------------------------------第六部分身份验证----------------------------***********************************/
     //获取code(get)

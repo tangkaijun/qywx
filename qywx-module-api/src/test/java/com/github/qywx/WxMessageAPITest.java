@@ -2,10 +2,11 @@ package com.github.qywx;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.api.WxMessageAPI;
-import com.github.qywx.core.request.message.TextMessage;
+import com.github.qywx.core.request.message.active.NewsMessage;
+import com.github.qywx.core.request.message.active.TextCardMessage;
+import com.github.qywx.core.request.message.active.TextMessage;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.message.MessageRes;
-import com.github.qywx.utils.httpclient.HttpClientUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class WxMessageAPITest {
 
     /**发送普通文本消息*/
     @Test
-    public void testSendMessage() throws Exception{
+    public void testSendTextMessage() throws Exception{
         TextMessage textMessage = new TextMessage();
         textMessage.setSafe(0);
         textMessage.setAgentid(1000002);
@@ -34,6 +35,27 @@ public class WxMessageAPITest {
         textMessage.setTouser("khtang");
         MessageRes messageRes = WxMessageAPI.sendMessage(textMessage,accessToken.getAccess_token());
         System.out.println(messageRes);
+    }
+
+    //发送贺卡
+    @Test
+    public void testTextCardMessage() throws Exception{
+        TextCardMessage textCardMessage = new TextCardMessage();
+        textCardMessage.setTextcard(TextCardMessage.createTextCard("代办事宜","http://www.baidu.com","<div class='gray'>2017年12月15日</div> <div class='normal'>恭喜你抽中iPhone 7一台，领奖码：182378327</div><div class='highlight'>"+"请于2017年12月18日前联系行政同事领取</div>",null));
+        textCardMessage.setMsgtype("textcard");
+        textCardMessage.setTouser("khtang");
+        textCardMessage.setAgentid(1000002);
+        WxMessageAPI.sendMessage(textCardMessage,accessToken.getAccess_token());
+    }
+
+    //发送图文类消息
+    @Test
+    public void testNewsMessage() throws Exception {
+        NewsMessage newsMessage = new NewsMessage();
+        newsMessage.setMsgtype("news");
+        //newsMessage.setNews(NewsMessage.);
+       // newsMessage.setNews();
+       // newsMessage.setNews();
     }
 
     @Test
