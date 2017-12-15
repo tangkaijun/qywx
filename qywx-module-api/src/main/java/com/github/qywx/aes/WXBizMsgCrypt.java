@@ -29,7 +29,7 @@ import org.apache.commons.codec.binary.Base64;
  * 	<li>第三方回复加密消息给公众平台</li>
  * 	<li>第三方收到公众平台发送的消息，验证消息的安全性，并对消息进行解密。</li>
  * </ol>
- * 说明：异常java.security.InvalidKeyException:illegal Key Size的解决方案
+ * 说明：异常java.ssl.InvalidKeyException:illegal Key Size的解决方案
  * <ol>
  * 	<li>在官方网站下载JCE无限制权限策略文件（JDK7的下载地址：
  *      http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html</li>

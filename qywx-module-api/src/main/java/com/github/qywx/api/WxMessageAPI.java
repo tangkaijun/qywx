@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
 import com.github.qywx.core.request.message.active.Message;
-import com.github.qywx.core.response.message.MessageRes;
+import com.github.qywx.core.response.message.passive.MessageRes;
 import com.github.qywx.exception.RCodeException;
 import com.github.qywx.utils.httpclient.HttpClientUtils;
 import com.github.qywx.utils.httpclient.HttpResult;

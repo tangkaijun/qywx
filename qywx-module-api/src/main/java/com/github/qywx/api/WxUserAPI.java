@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.qywx.core.constant.WxAPI;
 import com.github.qywx.core.constant.WxRCode;
 import com.github.qywx.core.request.User;
+import com.github.qywx.core.request.UserTicket;
 import com.github.qywx.core.response.*;
 import com.github.qywx.core.response.user.OpenIdRes;
 import com.github.qywx.core.response.user.UserIdRes;
@@ -261,5 +262,46 @@ public class WxUserAPI {
         logger.info("二次验证成功", "authUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,response});
         return response;
     }
+
+    /**
+     * @param code
+     * @param accessToken
+     * @return
+     * @throws RCodeException
+     */
+    public static WxUserRes getUserByCode(String code,String accessToken) throws RCodeException{
+        WxUserRes wxUserRes = null;
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.USER_GET_URL.replace("CODE",code).replace("ACCESS_TOKEN",accessToken));
+        if (httpResult.getStatus() == 200) {
+            JSONObject jsonObject = JSON.parseObject(httpResult.getData());
+            wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
+            int rcode = wxUserRes.getErrcode();
+            if(rcode!=0){
+                logger.info("获取用户信息失败", "getUserByCode params code:{},accessToken:{}  response:{}",new Object[]{code,accessToken,wxUserRes});
+                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+            }
+            logger.info("获取用户信息成功", "getUserByCode params code:{},accessToken:{}  response:{}",new Object[]{code,accessToken,wxUserRes});
+        }
+        return wxUserRes;
+    }
+
+    public static WxUserRes getUserDetails(UserTicket userTicket,String accessToken) throws RCodeException{
+        WxUserRes wxUserRes = null;
+        String json = JSON.toJSONString(userTicket);
+        HttpResult httpResult = HttpClientUtils.doPost(WxAPI.USER_GETDETAIL_URL.replace("ACCESS_TOKEN",accessToken),json);
+        if (httpResult.getStatus() == 200) {
+            JSONObject jsonObject = JSON.parseObject(httpResult.getData());
+            wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
+            int rcode = wxUserRes.getErrcode();
+            if(rcode!=0){
+                logger.info("获取用户详情失败", "getUserDetails params userTicket:{},accessToken:{}  response:{}",new Object[]{userTicket,accessToken,wxUserRes});
+                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+            }
+            logger.info("获取用户详情成功", "getUserDetails params userTicket:{},accessToken:{}  response:{}",new Object[]{userTicket,accessToken,wxUserRes});
+        }
+        return wxUserRes;
+    }
+
+
 
 }
