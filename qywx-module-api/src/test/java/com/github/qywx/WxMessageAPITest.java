@@ -6,6 +6,7 @@ import com.github.qywx.core.request.message.active.NewsMessage;
 import com.github.qywx.core.request.message.active.TextCardMessage;
 import com.github.qywx.core.request.message.active.TextMessage;
 import com.github.qywx.core.response.AccessToken;
+import com.github.qywx.core.response.message.passive.MessageRes;
 import org.junit.Before;
 import org.junit.Test;
 

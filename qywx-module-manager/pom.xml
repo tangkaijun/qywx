@@ -90,6 +90,12 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
+        <!--servlet api-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
         <!--数据库连接池配置-->
         <dependency>
             <groupId>com.alibaba</groupId>

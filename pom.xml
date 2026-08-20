@@ -155,6 +155,14 @@
               <scope>test</scope>
           </dependency>
 
+          <!--servlet api，由web容器提供-->
+          <dependency>
+              <groupId>javax.servlet</groupId>
+              <artifactId>javax.servlet-api</artifactId>
+              <version>3.1.0</version>
+              <scope>provided</scope>
+          </dependency>
+
           <!--数据库连接池配置-->
           <dependency>
               <groupId>com.alibaba</groupId>
