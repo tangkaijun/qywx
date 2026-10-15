@@ -11,6 +11,12 @@
       <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
 
+  <!-- 注册 Spring 根上下文监听器：缺少它时 contextConfigLocation 不会被使用，
+       applicationContext.xml（及其导入的数据源 / 事务配置）永远不会被加载 -->
+  <listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
   <filter>
     <filter-name>HiddenHttpMethodFilter</filter-name>
     <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
