@@ -42,27 +42,17 @@ public class MessageService {
             Map<String, String> requestMap= MessageUtils.parseXml(xmlMsg);
 
             //3.获取请求参数
-            //3.1 企业微信CorpID
-            String fromUserName = requestMap.get("FromUserName");
-            //3.2 成员UserID
-            String toUserName = requestMap.get("ToUserName");
-            //3.3 消息类型与事件
+            //3.1 消息类型与事件
             String msgType = requestMap.get("MsgType");
             String eventType = requestMap.get("Event");
             String eventKey = requestMap.get("EventKey");
             System.out.println("msgType:"+msgType);
             System.out.println("Event:"+eventType+"  eventKey:"+eventKey);
 
-
             //4.组装 回复文本消息
-            TextMessage textMessage = new TextMessage();
-            textMessage.setToUserName(fromUserName);
-            textMessage.setFromUserName(toUserName);
-            textMessage.setCreateTime(new Date().getTime());
-            textMessage.setMsgType(MessageUtils.RESP_MESSAGE_TYPE_TEXT);
             //4.1.获取回复消息的内容 ：消息的分类处理
             String respContent=this.getRespContentByMsgType(msgType, eventType, eventKey);
-            textMessage.setContent(respContent);
+            TextMessage textMessage = buildReplyTextMessage(requestMap, respContent);
             System.out.println("respContent："+respContent);
 
             //5.获取xml字符串： 将（被动回复消息型的）文本消息对象 转成  xml字符串
@@ -117,6 +107,30 @@ public class MessageService {
         }
 
         return result;
+    }
+
+    /**
+     * 组装被动回复的文本消息。
+     *
+     * 企业微信推送过来的报文中，FromUserName 是成员账号（消息的发送方），
+     * ToUserName 是企业 CorpID / 应用；回复方向相反，必须把 ToUserName 设为成员、
+     * FromUserName 设为企业应用，否则企业微信无法正确路由，回复无法送达。
+     *
+     * @param requestMap 企业微信推送的请求参数
+     * @param respContent 回复内容
+     * @return 待加密的被动回复文本消息
+     */
+    TextMessage buildReplyTextMessage(Map<String, String> requestMap, String respContent) {
+        String toUser = requestMap.get("FromUserName");   // 消息来自的成员
+        String fromUser = requestMap.get("ToUserName");   // 企业 CorpID / 应用
+
+        TextMessage textMessage = new TextMessage();
+        textMessage.setToUserName(toUser);
+        textMessage.setFromUserName(fromUser);
+        textMessage.setCreateTime(new Date().getTime());
+        textMessage.setMsgType(MessageUtils.RESP_MESSAGE_TYPE_TEXT);
+        textMessage.setContent(respContent);
+        return textMessage;
     }
 
     /**
