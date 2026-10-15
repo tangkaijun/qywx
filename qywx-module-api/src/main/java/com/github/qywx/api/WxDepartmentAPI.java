@@ -35,12 +35,13 @@ public class WxDepartmentAPI {
         HttpResult httpResult =  HttpClientUtils.doPost(WxAPI.DEPARTMENT_CREATE_URL.replace("ACCESS_TOKEN",accessToken),json);
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
-            int rcode = jo.getInteger("errcode");
-            if(rcode!=0){
+            Integer rcode = jo.getInteger("errcode");
+            if (rcode == null || rcode != 0) {
                 logger.info("创建部门失败, createDepartment params wxDepart:{},accessToken:{}, response:{}", wxDepart,accessToken,jo);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
-            id = jo.getInteger("id");
+            Integer idResp = jo.getInteger("id");
+            id = idResp == null ? 0 : idResp;
             logger.info("创建部门成功, createDepartment params wxDepart:{},accessToken:{}, response:{}", wxDepart,accessToken,jo);
         }
         return id;
@@ -59,10 +60,10 @@ public class WxDepartmentAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            int rcode = response.getErrcode();
-            if(rcode!=0){
+            Integer rcode = response.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("更新部门失败, updateDepartment params wxDepart:{},accessToken:{}, response:{}", wxDepart,accessToken,response);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("更新部门成功, updateDepartment params wxDepart:{},accessToken:{}, response:{}", wxDepart,accessToken,response);
         }
@@ -81,10 +82,10 @@ public class WxDepartmentAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            int rcode = response.getErrcode();
-            if(rcode!=0){
+            Integer rcode = response.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("删除部门失败, deleteDepartment params id:{},accessToken:{}, response:{}", id,accessToken,response);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("删除部门成功, deleteDepartment params id:{},accessToken:{}, response:{}", id,accessToken,response);
         }
@@ -103,10 +104,10 @@ public class WxDepartmentAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo =JSON.parseObject(httpResult.getData());
             departmentRes = JSON.toJavaObject(jo,DepartmentResp.class);
-            int rcode = departmentRes.getErrcode();
-            if(rcode!=0){
+            Integer rcode = departmentRes.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("查询部门失败, getDepartmentList params id:{},accessToken:{}, response:{}", id,accessToken,departmentRes);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("查询部门成功, getDepartmentList params id:{},accessToken:{}, response:{}", id,accessToken,departmentRes);
         }

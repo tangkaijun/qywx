@@ -31,10 +31,10 @@ public class AccessTokenAPI {
             if(httpResult.getStatus()==200){
                 JSONObject jsonObject = JSON.parseObject(httpResult.getData());
                 accessToken = JSON.toJavaObject(jsonObject,AccessToken.class);
-                int rcode = accessToken.getErrcode();
-                if(rcode!=0){
+                Integer rcode = accessToken.getErrcode();
+                if (rcode == null || rcode != 0) {
                     logger.info("获取微信Token失败, getAccessToken params corpid:{},corpsecret:{}, response:{}", corpid,corpsecret,accessToken);
-                    throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                    throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
                 }
                 logger.info("获取微信Token成功, getAccessToken params corpid:{},corpsecret:{}, response:{}", corpid,corpsecret,accessToken);
             }

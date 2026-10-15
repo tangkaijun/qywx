@@ -27,10 +27,10 @@ public class WxMenuAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            int rcode = response.getErrcode();
-            if(rcode!=0){
+            Integer rcode = response.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("创建菜单失败", "createMenu params menu:{}, agentid:{},accessToken:{}, response:{}", new Object[]{menu,agentid,accessToken,response});
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("创建菜单成功", "createMenu params menu:{}, agentid:{},accessToken:{}, response:{}", new Object[]{menu,agentid,accessToken,response});
         }
@@ -49,10 +49,10 @@ public class WxMenuAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            int rcode = response.getErrcode();
-            if(rcode!=0){
+            Integer rcode = response.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("获取菜单失败", "getMenu params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,response});
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("获取菜单成功", "getMenu params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,response});
         }
@@ -71,10 +71,10 @@ public class WxMenuAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            int rcode = response.getErrcode();
-            if(rcode!=0){
+            Integer rcode = response.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("删除菜单失败", "deleteMenu params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,response});
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("删除菜单成功", "deleteMenu params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,response});
         }

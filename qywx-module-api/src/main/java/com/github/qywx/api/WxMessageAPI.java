@@ -37,10 +37,10 @@ public class WxMessageAPI {
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             messageRes = JSON.toJavaObject(jo,MessageRes.class);
-            int rcode = messageRes.getErrcode();
-            if(rcode!=0){
+            Integer rcode = messageRes.getErrcode();
+            if (rcode == null || rcode != 0) {
                 logger.info("信息发送失败, createMenu params message:{},accessToken:{}, response:{}", message,accessToken,messageRes);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("信息发送成功, createMenu params message:{},accessToken:{}, response:{}", message,accessToken,messageRes);
         }
