@@ -7,6 +7,7 @@ import com.github.qywx.core.request.menu.ComplexButton;
 import com.github.qywx.core.request.menu.Menu;
 import com.github.qywx.core.request.menu.SimpleButton;
 import com.github.qywx.core.response.AccessToken;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 /**
  * Created by kaijun on 2017/12/11.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxMenuAPITest {
 
     @Test

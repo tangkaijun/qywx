@@ -8,11 +8,13 @@ import com.github.qywx.core.request.Application;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.application.AppListResp;
 import com.github.qywx.core.response.application.ApplicationResp;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Created by kjtang on 2017/12/11.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxApplicationTest {
 
     /**

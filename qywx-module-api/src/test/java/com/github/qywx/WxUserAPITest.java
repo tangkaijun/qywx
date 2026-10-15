@@ -11,6 +11,7 @@ import com.github.qywx.core.response.user.UserIdRes;
 import com.github.qywx.core.response.user.UserListResp;
 import com.github.qywx.core.response.user.WxUserRes;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by kaijun on 2017/12/10.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxUserAPITest {
 
     private AccessToken accessToken;

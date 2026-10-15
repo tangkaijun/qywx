@@ -9,6 +9,7 @@ import com.github.qywx.core.request.material.News;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.media.MediaRes;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * Created by kjtang on 2017/12/15.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxMediaAPITest {
 
     private static Logger logger = LoggerFactory.getLogger(WxMediaAPI.class);

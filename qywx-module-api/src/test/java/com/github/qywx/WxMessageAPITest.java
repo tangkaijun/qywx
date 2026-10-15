@@ -9,6 +9,7 @@ import com.github.qywx.core.request.message.active.TextMessage;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.message.passive.MessageRes;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by kjtang on 2017/12/12.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxMessageAPITest {
 
     private AccessToken accessToken;

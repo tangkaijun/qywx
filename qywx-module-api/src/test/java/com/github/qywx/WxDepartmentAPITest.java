@@ -7,6 +7,7 @@ import com.github.qywx.core.request.Department;
 import com.github.qywx.core.response.AccessToken;
 import com.github.qywx.core.response.department.DepartmentResp;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by kjtang on 2017/12/14.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxDepartmentAPITest {
 
     private static Logger logger = LoggerFactory.getLogger(WxDepartmentAPITest.class);

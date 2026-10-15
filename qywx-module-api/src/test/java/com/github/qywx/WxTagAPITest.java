@@ -9,6 +9,7 @@ import com.github.qywx.core.response.Response;
 import com.github.qywx.core.response.tag.TagListResp;
 import com.github.qywx.core.response.tag.TagResp;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 /**
  * Created by kjtang on 2017/12/14.
  */
+@Ignore("需要真实企业微信凭证与网络，默认跳过；参见 issue #18")
 public class WxTagAPITest {
 
     private AccessToken accessToken;
