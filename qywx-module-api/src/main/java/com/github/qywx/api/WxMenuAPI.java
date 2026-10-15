@@ -45,7 +45,7 @@ public class WxMenuAPI {
      */
     public static Response getMenu(Integer agentid,String accessToken) throws RCodeException{
         Response response = null;
-        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MENU_GET_URL.replace("AGENTID",String.valueOf(agentid).replace("ACCESS_TOKEN",accessToken)));
+        HttpResult httpResult = HttpClientUtils.doGet(menuGetUrl(agentid, accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
@@ -67,7 +67,7 @@ public class WxMenuAPI {
      */
     public static Response deleteMenu(Integer agentid,String accessToken) throws RCodeException{
         Response response = null;
-        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MENU_DELETE_URL.replace("AGENTID",String.valueOf(agentid).replace("ACCESS_TOKEN",accessToken)));
+        HttpResult httpResult = HttpClientUtils.doGet(menuDeleteUrl(agentid, accessToken));
         if(httpResult.getStatus()==200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
@@ -79,6 +79,18 @@ public class WxMenuAPI {
             logger.info("删除菜单成功", "deleteMenu params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,response});
         }
         return response;
+    }
+
+    static String menuGetUrl(Integer agentid, String accessToken) {
+        return WxAPI.MENU_GET_URL
+                .replace("AGENTID", String.valueOf(agentid))
+                .replace("ACCESS_TOKEN", accessToken);
+    }
+
+    static String menuDeleteUrl(Integer agentid, String accessToken) {
+        return WxAPI.MENU_DELETE_URL
+                .replace("AGENTID", String.valueOf(agentid))
+                .replace("ACCESS_TOKEN", accessToken);
     }
 
 }
