@@ -2,6 +2,7 @@ package com.github.qywx.manager.controller;
 
 import com.github.qywx.aes.WXBizMsgCrypt;
 import com.github.qywx.core.constant.WxParam;
+import com.github.qywx.manager.service.MessageProcessException;
 import com.github.qywx.manager.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +58,21 @@ public class CoreController {
         response.setCharacterEncoding("UTF-8");
         //2.调用消息业务类接收消息、处理消息
         MessageService msgsv=new MessageService();
-        String respMessage = msgsv.getEncryptRespMessage(request);
-        //3.响应消息
         PrintWriter out = response.getWriter();
-        out.print(respMessage);
-        out.close();
+        try {
+            String respMessage = msgsv.getEncryptRespMessage(request);
+            //3.响应消息
+            out.print(respMessage);
+        } catch (MessageProcessException e) {
+            // 解密 / 验签 / 读取请求体失败：返回明确的错误响应，不再静默输出 "null"
+            logger.warn("处理企业微信回调消息失败, msg_signature:{}, timestamp:{}, nonce:{}",
+                    request.getParameter("msg_signature"), request.getParameter("timestamp"),
+                    request.getParameter("nonce"), e);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.print("处理消息失败");
+        } finally {
+            out.close();
+        }
     }
 
     public void secondVerify(HttpServletRequest request,HttpServletResponse response) throws Exception{

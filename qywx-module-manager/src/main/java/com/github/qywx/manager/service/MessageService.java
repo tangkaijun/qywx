@@ -64,10 +64,16 @@ public class MessageService {
 
             //6.加密
             WXBizMsgCrypt wxcpt=new WXBizMsgCrypt(WxParam.TOKEN, WxParam.ENCODING_AES_KEY,WxParam.CORPID);
-            respMessage = wxcpt.EncryptMsg(respMessage, timestamp, msgType);
+            respMessage = wxcpt.EncryptMsg(respMessage, timestamp, nonce);
 
+        } catch (MessageProcessException e) {
+            throw e;
         } catch (Exception e) {
-            logger.error("处理企业微信回调消息失败", e);
+            // 解密 / 验签 / 组装回复失败属于服务端处理异常，必须向上抛出由 CoreController 返回明确错误，
+            // 否则调用方拿到 null 无法区分「无消息」与「处理失败」。
+            logger.error("处理企业微信回调消息失败, msg_signature:{}, timestamp:{}, nonce:{}",
+                    msg_signature, timestamp, nonce, e);
+            throw new MessageProcessException("处理企业微信回调消息失败", e);
         }
 
         return respMessage;
@@ -79,11 +85,11 @@ public class MessageService {
      *
      * @param request
      * @return String   消息明文
+     * @throws MessageProcessException 读取请求体失败或解密 / 验签失败
      */
     public String getDecryptMsg(HttpServletRequest request) {
 
         String postData="";   // 密文，对应POST请求的数据
-        String result="";     // 明文，解密之后的结果
 
         this.msg_signature = request.getParameter("msg_signature"); // 微信加密签名
         this.timestamp = request.getParameter("timestamp");   // 时间戳
@@ -98,18 +104,27 @@ public class MessageService {
             while(null!=(tempStr=reader.readLine())){
                 postData+=tempStr;
             }
-
-            //2.获取消息明文：对加密的请求消息进行解密获得明文
-            WXBizMsgCrypt wxcpt=new WXBizMsgCrypt(WxParam.TOKEN, WxParam.ENCODING_AES_KEY,WxParam.CORPID);
-            result = wxcpt.DecryptMsg(msg_signature, timestamp, nonce, postData);
-
         } catch (IOException e) {
-            logger.error("读取企业微信回调请求体失败", e);
-        } catch (AesException e) {
-            logger.error("企业微信回调消息解密或验签失败, msg_signature:{}, timestamp:{}, nonce:{}", msg_signature, timestamp, nonce, e);
+            logger.error("读取企业微信回调请求体失败, msg_signature:{}, timestamp:{}, nonce:{}",
+                    msg_signature, timestamp, nonce, e);
+            throw new MessageProcessException("读取企业微信回调请求体失败", e);
         }
 
-        return result;
+        try {
+            //2.获取消息明文：对加密的请求消息进行解密获得明文
+            WXBizMsgCrypt wxcpt=new WXBizMsgCrypt(WxParam.TOKEN, WxParam.ENCODING_AES_KEY,WxParam.CORPID);
+            return wxcpt.DecryptMsg(msg_signature, timestamp, nonce, postData);
+        } catch (AesException e) {
+            // 验签失败单独记录安全日志，便于发现伪造 / 畸形报文的探测行为（不打印密钥与密文全文）
+            if (e.getCode() == AesException.ValidateSignatureError) {
+                logger.warn("企业微信回调消息签名校验失败（疑似伪造报文）, msg_signature:{}, timestamp:{}, nonce:{}",
+                        msg_signature, timestamp, nonce);
+            } else {
+                logger.error("企业微信回调消息解密失败, code:{}, msg_signature:{}, timestamp:{}, nonce:{}",
+                        e.getCode(), msg_signature, timestamp, nonce, e);
+            }
+            throw new MessageProcessException("企业微信回调消息解密或验签失败", e);
+        }
     }
 
     /**
