@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,31 +71,6 @@ public class CoreController {
             out.print("处理消息失败");
         } finally {
             out.close();
-        }
-    }
-
-    public void secondVerify(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
-        PrintWriter out = response.getWriter();
-        String code = request.getParameter("code");
-        if (!"authdeny".equals(code)) {
-            // 调取凭证
-            String access_token = "";
-            // 打印凭证
-            out.print("凭证:"+access_token);
-            // agentid 跳转链接时所在的企业应用ID 管理员须拥有agent的使用权限；agentid必须和跳转链接时所在的企业应用ID相同
-           // String UserID = GOauth2Core.GetUserID(access_token, code, "1");
-            // 二次验证地址
-          //  String RequestURL = ParamesAPI.Secondary_verification.replace("ACCESS_TOKEN",access_token).replace("USERID", UserID);
-            // 二次验证返回数据
-         //   JSONObject jsonObject = WeixinUtil.HttpRequest(RequestURL, "GET", null);
-            // 二次验证结果
-           // out.print("二次验证返回结果：\n"+jsonObject);
-            // 传值
-          //  request.setAttribute("jsonObject", jsonObject);
-        }
-        else{
-            out.print("Code获取失败，至于为什么，自己找原因。。。");
         }
     }
 
