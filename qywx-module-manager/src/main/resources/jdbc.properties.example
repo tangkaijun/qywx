@@ -1,0 +1,19 @@
+# jdbc.properties 模板
+#
+# 复制为 jdbc.properties 后按环境填写，或直接通过环境变量 / 系统属性注入，
+# 不要把真实的账号口令提交到版本库。
+#
+# 方式一（推荐，容器化部署）：环境变量
+#   export JDBC_URL="jdbc:mysql://db-host:3306/qywx?useUnicode=true&characterEncoding=UTF-8&useSSL=true"
+#   export JDBC_USERNAME="qywx_app"
+#   export JDBC_PASSWORD="<从密钥管理系统获取>"
+#
+# 方式二：JVM 系统属性
+#   -Djdbc.url=... -Djdbc.username=... -Djdbc.password=...
+#
+# 说明：生产环境必须使用专用的最小权限账号，禁止使用 root。
+
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=${JDBC_URL:jdbc:mysql://127.0.0.1:3306/qywx?useUnicode=true&characterEncoding=UTF-8&useSSL=true}
+jdbc.username=${JDBC_USERNAME:qywx}
+jdbc.password=${JDBC_PASSWORD:}
