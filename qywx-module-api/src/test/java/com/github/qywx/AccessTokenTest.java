@@ -1,4 +1,5 @@
 package com.github.qywx;
+import com.github.qywx.core.constant.WxParam;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.core.response.AccessToken;
@@ -11,7 +12,7 @@ public class AccessTokenTest {
 
     @Test
     public void testToken(){
-        AccessToken accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","zOfT-aTOL5gTRdUWTs76VLHWzV-m43N82ut7qWakuPM");
+        AccessToken accessToken = AccessTokenAPI.getAccessToken(WxParam.CORPID,System.getenv("WX_CORP_SECRET"));
         System.out.println(accessToken);
     }
 

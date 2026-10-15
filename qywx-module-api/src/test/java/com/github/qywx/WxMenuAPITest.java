@@ -1,4 +1,5 @@
 package com.github.qywx;
+import com.github.qywx.core.constant.WxParam;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.api.WxMenuAPI;
@@ -17,7 +18,7 @@ public class WxMenuAPITest {
 
     @Test
     public void testCreateMenu() throws Exception{
-        AccessToken accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","08IOCnadzFkypgz09nrmuQBMudmPT9PiNERaJimXXck");
+        AccessToken accessToken = AccessTokenAPI.getAccessToken(WxParam.CORPID,System.getenv("WX_CORP_SECRET"));
         Menu menu = new Menu();
         SimpleButton btn11 = new SimpleButton();
         btn11.setName("菜单1-1");
@@ -100,7 +101,7 @@ public class WxMenuAPITest {
 
     @Test
     public void testGetMenu() throws Exception{
-        AccessToken accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","08IOCnadzFkypgz09nrmuQBMudmPT9PiNERaJimXXck");
+        AccessToken accessToken = AccessTokenAPI.getAccessToken(WxParam.CORPID,System.getenv("WX_CORP_SECRET"));
         //Menu menu = WxMenuAPI.getMenu(22,accessToken.getAccess_token());
     }
 }

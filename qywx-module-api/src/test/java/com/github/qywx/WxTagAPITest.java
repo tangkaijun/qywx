@@ -1,4 +1,5 @@
 package com.github.qywx;
+import com.github.qywx.core.constant.WxParam;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.api.WxTagAPI;
@@ -21,7 +22,7 @@ public class WxTagAPITest {
 
     @Before
     public void beforeRun(){
-        accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","8jLibCI_PHuaY63SzU3VoAK5O68UdQhtzMat26hcCJo");
+        accessToken = AccessTokenAPI.getAccessToken(WxParam.CORPID,System.getenv("WX_CORP_SECRET"));
     }
 
     /**

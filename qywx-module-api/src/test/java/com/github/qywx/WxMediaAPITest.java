@@ -1,4 +1,5 @@
 package com.github.qywx;
+import com.github.qywx.core.constant.WxParam;
 
 import com.github.qywx.api.AccessTokenAPI;
 import com.github.qywx.api.WxMediaAPI;
@@ -27,7 +28,7 @@ public class WxMediaAPITest {
 
     @Before
     public void beforeMethod(){
-        accessToken = AccessTokenAPI.getAccessToken("wwc8cefdb9d53fd9f0","08IOCnadzFkypgz09nrmuQBMudmPT9PiNERaJimXXck");
+        accessToken = AccessTokenAPI.getAccessToken(WxParam.CORPID,System.getenv("WX_CORP_SECRET"));
     }
 
     //上传永久素材
