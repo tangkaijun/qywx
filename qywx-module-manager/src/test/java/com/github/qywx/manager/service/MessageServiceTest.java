@@ -30,4 +30,17 @@ public class MessageServiceTest {
         assertEquals("您好", reply.getContent());
         assertNotNull(reply.getCreateTime());
     }
+
+    /**
+     * 回归测试：issue #7 —— 报文缺少 MsgType / Event / EventKey 字段时不得抛 NPE。
+     */
+    @Test
+    public void nullFieldsShouldNotThrowNpe() {
+        MessageService service = new MessageService();
+
+        assertEquals("请求处理异常，请稍候尝试！",
+                service.getRespContentByMsgType(null, null, null));
+        assertEquals("", service.processEevent(null, null));
+        assertEquals("", service.getRespContentByMsgType(MessageUtils.REQ_MESSAGE_TYPE_EVENT, null, null));
+    }
 }

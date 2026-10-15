@@ -142,28 +142,28 @@ public class MessageService {
     public String getRespContentByMsgType(String msgType,String eventType,String eventKey){
         String respContent="";
         //1.文本消息
-        if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_TEXT)) {
+        if (MessageUtils.REQ_MESSAGE_TYPE_TEXT.equals(msgType)) {
             respContent = "您发送的是文本消息！";
 
         }
         //2.图片消息
-        else if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_IMAGE)) {
+        else if (MessageUtils.REQ_MESSAGE_TYPE_IMAGE.equals(msgType)) {
             respContent = "您发送的是图片消息！";
         }
-        //3.地理位置消息
-        else if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_LOCATION)) {
-            System.out.println("消息类型：定位");
+        //3.地理位置消息：仅上报位置，无需回复
+        else if (MessageUtils.REQ_MESSAGE_TYPE_LOCATION.equals(msgType)) {
+            respContent = "";
         }
         //4.链接消息
-        else if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_LINK)) {
+        else if (MessageUtils.REQ_MESSAGE_TYPE_LINK.equals(msgType)) {
             respContent = "您发送的是链接消息！";
         }
         //5.音频消息
-        else if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_VOICE)) {
+        else if (MessageUtils.REQ_MESSAGE_TYPE_VOICE.equals(msgType)) {
             respContent = "您发送的是音频消息！";
         }
         //6.事件推送
-        else if (msgType.equals(MessageUtils.REQ_MESSAGE_TYPE_EVENT)) {
+        else if (MessageUtils.REQ_MESSAGE_TYPE_EVENT.equals(msgType)) {
             respContent=this.processEevent(eventType, eventKey);
         }
         //7.请求异常
@@ -178,42 +178,42 @@ public class MessageService {
 
         String respContent="";
         // 订阅
-        if (eventType.equals(MessageUtils.EVENT_TYPE_SUBSCRIBE)) {
+        if (MessageUtils.EVENT_TYPE_SUBSCRIBE.equals(eventType)) {
             respContent = "欢迎关注！";
         }
         // 取消订阅
-        else if (eventType.equals(MessageUtils.EVENT_TYPE_UNSUBSCRIBE)) {
+        else if (MessageUtils.EVENT_TYPE_UNSUBSCRIBE.equals(eventType)) {
             // TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
         }
-        //上报地理位置事件
-        else if(eventType.equals("LOCATION")){
+        //上报地理位置事件：仅上报，无需回复
+        else if("LOCATION".equals(eventType)){
 
         }
         // 自定义菜单点击事件
-        else if (eventType.equals(MessageUtils.EVENT_TYPE_CLICK)) {
+        else if (MessageUtils.EVENT_TYPE_CLICK.equals(eventType)) {
 
-            if (eventKey.equals("12")) {
+            if ("12".equals(eventKey)) {
                 // TODO  help
-            } else if (eventKey.equals("13")) {
+            } else if ("13".equals(eventKey)) {
                 respContent = "周边搜索菜单项被点击！";
-            } else if (eventKey.equals("14")) {
+            } else if ("14".equals(eventKey)) {
                 respContent = "历史上的今天菜单项被点击！";
-            } else if (eventKey.equals("21")) {
+            } else if ("21".equals(eventKey)) {
                 respContent = "歌曲点播菜单项被点击！";
-            } else if (eventKey.equals("22")) {
+            } else if ("22".equals(eventKey)) {
 
                 respContent = "经典游戏菜单项被点击！";
-            } else if (eventKey.equals("23")) {
+            } else if ("23".equals(eventKey)) {
                 respContent = "美女电台菜单项被点击！";
-            } else if (eventKey.equals("24")) {
+            } else if ("24".equals(eventKey)) {
                 respContent = "人脸识别菜单项被点击！";
-            } else if (eventKey.equals("25")) {
+            } else if ("25".equals(eventKey)) {
                 respContent = "聊天唠嗑菜单项被点击！";
-            } else if (eventKey.equals("31")) {
+            } else if ("31".equals(eventKey)) {
                 respContent = "Q友圈菜单项被点击！";
-            } else if (eventKey.equals("32")) {
+            } else if ("32".equals(eventKey)) {
                 respContent = "电影排行榜菜单项被点击！";
-            } else if (eventKey.equals("33")) {
+            } else if ("33".equals(eventKey)) {
                 respContent = "幽默笑话菜单项被点击！";
             }
         }
