@@ -43,7 +43,7 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="net.oschina.kjtang.qywx.*.dao" />
+		<property name="basePackage" value="com.github.qywx.manager.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
