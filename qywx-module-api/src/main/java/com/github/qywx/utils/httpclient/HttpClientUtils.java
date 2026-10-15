@@ -2,51 +2,56 @@ package com.github.qywx.utils.httpclient;
 
 import com.github.qywx.exception.RCodeException;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by kaijun on 2017/12/10.
  */
 public class HttpClientUtils {
 
-    public static CloseableHttpClient httpClient;
+    private static final int CONNECT_TIMEOUT = 5000;
+    private static final int SOCKET_TIMEOUT = 10000;
+    private static final int CONNECTION_REQUEST_TIMEOUT = 5000;
+
+    private static final CloseableHttpClient httpClient;
 
     static {
-        httpClient=HttpClientBuilder.create().build();
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+        connectionManager.setMaxTotal(200);
+        connectionManager.setDefaultMaxPerRoute(50);
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(CONNECT_TIMEOUT)
+                .setSocketTimeout(SOCKET_TIMEOUT)
+                .setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT)
+                .build();
+
+        httpClient = HttpClientBuilder.create()
+                .setConnectionManager(connectionManager)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
     }
 
-    public static HttpResult executeRequest(CloseableHttpClient httpClient,HttpRequestBase http){
-        CloseableHttpResponse response = null;
-        try {
-            // 执行请求
-            response = httpClient.execute(http);
-            return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity(), "UTF-8"));
-        }catch (Exception e){
+    public static HttpResult executeRequest(CloseableHttpClient httpClient, HttpRequestBase http) {
+        try (CloseableHttpResponse response = httpClient.execute(http)) {
+            return new HttpResult(response.getStatusLine().getStatusCode(),
+                    EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (response != null) {
-                try {
-                    response.close();
-                }catch (Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
@@ -58,7 +63,6 @@ public class HttpClientUtils {
         // 创建http GET请求
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0");
-        httpGet.setHeader("Connection","Connection");
         return executeRequest(httpClient,httpGet);
     }
 
@@ -106,26 +110,14 @@ public class HttpClientUtils {
         // 创建http GET请求
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0");
-        httpGet.setHeader("Connection","Connection");
-        CloseableHttpResponse response = null;
-        try {
-            // 执行请求
-            response = httpClient.execute(httpGet);
-            if(response.getStatusLine().getStatusCode()==200) {
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            if (response.getStatusLine().getStatusCode() == 200) {
                 return new HttpFileResult(response.getStatusLine().getStatusCode(), response.getEntity(), localUrl).doHandle();
-            }else{
-                return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity(), "UTF-8"));
             }
-        }catch (Exception e){
+            return new HttpResult(response.getStatusLine().getStatusCode(),
+                    EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (response != null) {
-                try {
-                    response.close();
-                }catch (Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
