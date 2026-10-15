@@ -8,10 +8,11 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.xml.sax.InputSource;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,25 @@ public class MessageUtils {
     public static final String EVENT_TYPE_CLICK = "click";
 
     /**
+     * 创建禁用 DTD / 外部实体的 SAXReader。
+     * 回调报文来自外部输入，必须防止 XXE（读取本地文件）与 SSRF。
+     */
+    private static SAXReader newSecureSAXReader() throws Exception {
+        SAXReader reader = new SAXReader();
+        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        reader.setEntityResolver(new org.xml.sax.EntityResolver() {
+            @Override
+            public org.xml.sax.InputSource resolveEntity(String publicId, String systemId) {
+                // 不解析任何外部实体
+                return new InputSource(new StringReader(""));
+            }
+        });
+        return reader;
+    }
+
+    /**
      * @desc ：1.解析微信发来的请求（XML）,获取请求参数
      ** @return
      * @throws Exception Map<String,String>
@@ -61,7 +81,7 @@ public class MessageUtils {
 
         // 从request中取得输入流
         InputStream inputStream =inStream;
-        SAXReader reader = new SAXReader();
+        SAXReader reader = newSecureSAXReader();
         Document document = reader.read(inputStream);
         // 得到xml根元素
         Element root = document.getRootElement();
@@ -89,8 +109,8 @@ public class MessageUtils {
     public static Map<String, String> parseXml(String xmlStr) throws Exception {
         // 将解析结果存储在HashMap中
         Map<String, String> map = new HashMap<String, String>();
-        //1.将字符串转为Document
-        Document document = DocumentHelper.parseText(xmlStr);
+        //1.将字符串转为Document（使用禁用 DTD / 外部实体的 SAXReader，避免 XXE）
+        Document document = newSecureSAXReader().read(new StringReader(xmlStr));
         //2.获取根元素的所有子节点
         // 得到xml根元素
         Element root = document.getRootElement();
