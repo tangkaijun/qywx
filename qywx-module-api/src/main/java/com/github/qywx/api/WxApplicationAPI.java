@@ -35,10 +35,10 @@ public class WxApplicationAPI {
             applicationRes = JSON.toJavaObject(jo,ApplicationResp.class);
             int rcode = applicationRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取应用失败", "getApplication params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,applicationRes});
+                logger.info("获取应用失败, getApplication params agentid:{},accessToken:{}, response:{}", agentid,accessToken,applicationRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("获取应用成功", "getApplication params agentid:{},accessToken:{}, response:{}", new Object[]{agentid,accessToken,applicationRes});
+            logger.info("获取应用成功, getApplication params agentid:{},accessToken:{}, response:{}", agentid,accessToken,applicationRes);
         }
         return applicationRes;
     }
@@ -58,10 +58,10 @@ public class WxApplicationAPI {
             response = JSON.toJavaObject(jo,Response.class);
             int rcode = response.getErrcode();
             if(rcode!=0){
-                logger.info("设置应用失败", "setApplication params wxApp:{},accessToken:{}, response:{}", new Object[]{wxApp,accessToken,response});
+                logger.info("设置应用失败, setApplication params wxApp:{},accessToken:{}, response:{}", wxApp,accessToken,response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("设置应用成功", "setApplication params wxApp:{},accessToken:{}, response:{}", new Object[]{wxApp,accessToken,response});
+            logger.info("设置应用成功, setApplication params wxApp:{},accessToken:{}, response:{}", wxApp,accessToken,response);
         }
         return response;
     }
@@ -79,10 +79,10 @@ public class WxApplicationAPI {
             appListRes = JSON.toJavaObject(jo,AppListResp.class);
             int rcode = appListRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取应用列表失败", "getApplicationList params accessToken:{}, response:{}", new Object[]{accessToken,appListRes});
+                logger.info("获取应用列表失败, getApplicationList params accessToken:{}, response:{}", accessToken,appListRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("获取应用列表成功", "getApplicationList params accessToken:{}, response:{}", new Object[]{accessToken,appListRes});
+            logger.info("获取应用列表成功, getApplicationList params accessToken:{}, response:{}", accessToken,appListRes);
         }
         return appListRes;
     }

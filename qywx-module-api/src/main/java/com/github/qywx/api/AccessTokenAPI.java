@@ -33,10 +33,10 @@ public class AccessTokenAPI {
                 accessToken = JSON.toJavaObject(jsonObject,AccessToken.class);
                 int rcode = accessToken.getErrcode();
                 if(rcode!=0){
-                    logger.info("获取微信Token失败", "getAccessToken params corpid:{},corpsecret:{}, response:{}", new Object[]{corpid,corpsecret,accessToken});
+                    logger.info("获取微信Token失败, getAccessToken params corpid:{},corpsecret:{}, response:{}", corpid,corpsecret,accessToken);
                     throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
                 }
-                logger.info("获取微信Token成功", "getAccessToken params corpid:{},corpsecret:{}, response:{}", new Object[]{corpid,corpsecret,accessToken});
+                logger.info("获取微信Token成功, getAccessToken params corpid:{},corpsecret:{}, response:{}", corpid,corpsecret,accessToken);
             }
         return accessToken;
     }

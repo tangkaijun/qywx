@@ -37,10 +37,10 @@ public class WxMediaAPI {
             mediaRes = JSON.toJavaObject(jo,MediaRes.class);
             int rcode = mediaRes.getErrcode();
             if(rcode!=0){
-                logger.info("文件上传失败", "mediaUpload params file:{},type:{},accessToken:{}, response:{}", new Object[]{file,type,accessToken,mediaRes});
+                logger.info("文件上传失败, mediaUpload params file:{},type:{},accessToken:{}, response:{}", file,type,accessToken,mediaRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("文件上传成功", "mediaUpload params file:{},type:{},accessToken:{}, response:{}", new Object[]{file,type,accessToken,mediaRes});
+            logger.info("文件上传成功, mediaUpload params file:{},type:{},accessToken:{}, response:{}", file,type,accessToken,mediaRes);
         }
         return mediaRes;
     }
@@ -57,10 +57,10 @@ public class WxMediaAPI {
         if(httpResult.getStatus()!=200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             response = JSON.toJavaObject(jo,Response.class);
-            logger.info("文件下载失败", "mediaDownload params localUrl:{},media_id:{},accessToken:{}, response:{}", new Object[]{localUrl,media_id,accessToken,response});
+            logger.info("文件下载失败, mediaDownload params localUrl:{},media_id:{},accessToken:{}, response:{}", localUrl,media_id,accessToken,response);
             throw new RCodeException(response.getErrcode(), WxRCode.getErrorMsg(response.getErrcode()));
         }
-        logger.info("文件下载成功", "mediaDownload params localUrl:{},media_id:{},accessToken:{}", new Object[]{localUrl,media_id,accessToken});
+        logger.info("文件下载成功, mediaDownload params localUrl:{},media_id:{},accessToken:{}", localUrl,media_id,accessToken);
         return response;
     }
 
@@ -77,10 +77,10 @@ public class WxMediaAPI {
         if(httpResult.getStatus()!=200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             mediaRes = JSON.toJavaObject(jo,MediaRes.class);
-            logger.info("删除永久图文素材失败", "mediaDownload params mpnews:{},accessToken:{}, response:{}", new Object[]{news,accessToken,mediaRes});
+            logger.info("删除永久图文素材失败, mediaDownload params mpnews:{},accessToken:{}, response:{}", news,accessToken,mediaRes);
             throw new RCodeException(mediaRes.getErrcode(), WxRCode.getErrorMsg(mediaRes.getErrcode()));
         }
-        logger.info("删除永久图文素材成功", "mediaDownload params mpnews:{},accessToken:{},response:{}", new Object[]{news,accessToken,mediaRes});
+        logger.info("删除永久图文素材成功, mediaDownload params mpnews:{},accessToken:{},response:{}", news,accessToken,mediaRes);
         return mediaRes;
     }
 
@@ -98,10 +98,10 @@ public class WxMediaAPI {
         JSONObject jo = JSON.parseObject(httpResult.getData());
         response = JSON.toJavaObject(jo,Response.class);
         if(httpResult.getStatus()==200){
-            logger.info("删除永久图文素材失败", "deleteMedia params mpnews:{},accessToken:{}, response:{}", new Object[]{media_id,accessToken,response});
+            logger.info("删除永久图文素材失败, deleteMedia params mpnews:{},accessToken:{}, response:{}", media_id,accessToken,response);
             throw new RCodeException(response.getErrcode(), WxRCode.getErrorMsg(response.getErrcode()));
         }
-        logger.info("删除永久图文素材成功", "deleteMedia params mpnews:{},accessToken:{},response:{}", new Object[]{media_id,accessToken,response});
+        logger.info("删除永久图文素材成功, deleteMedia params mpnews:{},accessToken:{},response:{}", media_id,accessToken,response);
         return response;
     }
 

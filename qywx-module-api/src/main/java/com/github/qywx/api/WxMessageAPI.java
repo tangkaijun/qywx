@@ -39,10 +39,10 @@ public class WxMessageAPI {
             messageRes = JSON.toJavaObject(jo,MessageRes.class);
             int rcode = messageRes.getErrcode();
             if(rcode!=0){
-                logger.info("信息发送失败", "createMenu params message:{},accessToken:{}, response:{}", new Object[]{message,accessToken,messageRes});
+                logger.info("信息发送失败, createMenu params message:{},accessToken:{}, response:{}", message,accessToken,messageRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("信息发送成功", "createMenu params message:{},accessToken:{}, response:{}", new Object[]{message,accessToken,messageRes});
+            logger.info("信息发送成功, createMenu params message:{},accessToken:{}, response:{}", message,accessToken,messageRes);
         }
         return messageRes;
     }
@@ -62,12 +62,12 @@ public class WxMessageAPI {
             Integer code = jo.getInteger("errcode");
             System.out.println(code);
             if(code!=0){
-                logger.info("获取微信服务ip失败", "createMenu params accessToken:{}, response:{}", new Object[]{accessToken,ips});
+                logger.info("获取微信服务ip失败, createMenu params accessToken:{}, response:{}", accessToken,ips);
                 throw new RCodeException(code, WxRCode.getErrorMsg(code));
             }
             JSONArray jsonArray = jo.getJSONArray("ip_list");
             ips = jsonArray.toJavaList(String.class);
-            logger.info("获取微信服务ip成功", "createMenu params accessToken:{}, response:{}", new Object[]{accessToken,ips});
+            logger.info("获取微信服务ip成功, createMenu params accessToken:{}, response:{}", accessToken,ips);
         }
         return ips;
     }

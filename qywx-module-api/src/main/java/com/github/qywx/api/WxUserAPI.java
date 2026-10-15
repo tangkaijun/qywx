@@ -44,11 +44,11 @@ public class WxUserAPI {
                 response = JSON.toJavaObject(jsonObject,Response.class);
                 int rcode = response.getErrcode();
                 if(rcode!=0){
-                    logger.info("创建成员失败", "createUser params wxUser:{},accessToken:{}  response:{}",new Object[]{wxUser,accessToken,response});
+                    logger.info("创建成员失败, createUser params wxUser:{},accessToken:{}  response:{}", wxUser,accessToken,response);
                     throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
                 }
             }
-        logger.info("创建成员成功", "createUser params wxUser:{},accessToken:{}  response:{}",new Object[]{wxUser,accessToken,response});
+        logger.info("创建成员成功, createUser params wxUser:{},accessToken:{}  response:{}", wxUser,accessToken,response);
         return response;
     }
 
@@ -66,10 +66,10 @@ public class WxUserAPI {
             wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
             int rcode = wxUserRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取用户失败", "getUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,wxUserRes});
+                logger.info("获取用户失败, getUser params userid:{},accessToken:{}  response:{}", userid,accessToken,wxUserRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("获取用户成功", "getUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,wxUserRes});
+            logger.info("获取用户成功, getUser params userid:{},accessToken:{}  response:{}", userid,accessToken,wxUserRes);
         }
         return wxUserRes;
     }
@@ -89,11 +89,11 @@ public class WxUserAPI {
             response = JSON.toJavaObject(jsonObject,Response.class);
             int rcode = response.getErrcode();
             if(rcode!=0){
-                logger.info("更新成员失败", "updateUser params wxUser:{},accessToken:{}  response:{}",new Object[]{wxUser,accessToken,response});
+                logger.info("更新成员失败, updateUser params wxUser:{},accessToken:{}  response:{}", wxUser,accessToken,response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("更新成员成功", "updateUser params wxUser:{},accessToken:{}  response:{}",new Object[]{wxUser,accessToken,response});
+        logger.info("更新成员成功, updateUser params wxUser:{},accessToken:{}  response:{}", wxUser,accessToken,response);
         return response;
     }
 
@@ -111,11 +111,11 @@ public class WxUserAPI {
             response = JSON.toJavaObject(jsonObject,Response.class);
             int rcode = response.getErrcode();
             if(rcode!=0){
-                logger.info("删除成员失败", "deleteUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,response});
+                logger.info("删除成员失败, deleteUser params userid:{},accessToken:{}  response:{}", userid,accessToken,response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("删除成员成功", "deleteUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,response});
+        logger.info("删除成员成功, deleteUser params userid:{},accessToken:{}  response:{}", userid,accessToken,response);
         return response;
     }
 
@@ -135,11 +135,11 @@ public class WxUserAPI {
             response = JSON.toJavaObject(jsonObject,Response.class);
             int rcode = response.getErrcode();
             if(rcode!=0){
-                logger.info("批量删除成员失败", "batchDeleteUser params userids:{},accessToken:{}  response:{}",new Object[]{userids,accessToken,response});
+                logger.info("批量删除成员失败, batchDeleteUser params userids:{},accessToken:{}  response:{}", userids,accessToken,response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("批量删除成员成功", "batchDeleteUser params userids:{},accessToken:{}  response:{}",new Object[]{userids,accessToken,response});
+        logger.info("批量删除成员成功, batchDeleteUser params userids:{},accessToken:{}  response:{}", userids,accessToken,response);
         return response;
     }
 
@@ -158,11 +158,11 @@ public class WxUserAPI {
             userListRes = JSON.toJavaObject(jsonObject,UserListResp.class);
             int rcode = userListRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取成员失败", "getUserSimpleList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});
+                logger.info("获取成员失败, getUserSimpleList params departmentId:{},fetchChild:{},accessToken:{},response:{}", departmentId,fetchChild,accessToken,accessToken,userListRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("获取成员成功", "getUserSimpleList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});
+        logger.info("获取成员成功, getUserSimpleList params departmentId:{},fetchChild:{},accessToken:{},response:{}", departmentId,fetchChild,accessToken,accessToken,userListRes);
         return userListRes;
     }
 
@@ -181,11 +181,11 @@ public class WxUserAPI {
             userListRes = JSON.toJavaObject(jsonObject,UserListResp.class);
             int rcode = userListRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取成员详细信息失败", "getUserList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});
+                logger.info("获取成员详细信息失败, getUserList params departmentId:{},fetchChild:{},accessToken:{},response:{}", departmentId,fetchChild,accessToken,accessToken,userListRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("获取成员详细信息成功", "getUserList params departmentId:{},fetchChild:{},accessToken:{},response:{}",new Object[]{departmentId,fetchChild,accessToken,accessToken,userListRes});
+        logger.info("获取成员详细信息成功, getUserList params departmentId:{},fetchChild:{},accessToken:{},response:{}", departmentId,fetchChild,accessToken,accessToken,userListRes);
         return userListRes;
     }
 
@@ -208,11 +208,11 @@ public class WxUserAPI {
             openIdRes = JSON.toJavaObject(jsonObject,OpenIdRes.class);
             int rcode = openIdRes.getErrcode();
             if(rcode!=0){
-                logger.info("userid交换openid失败", "userIdToOpenid params userid:{},agentid:{},accessToken:{},response:{}",new Object[]{userid,agentid,accessToken,openIdRes});
+                logger.info("userid交换openid失败, userIdToOpenid params userid:{},agentid:{},accessToken:{},response:{}", userid,agentid,accessToken,openIdRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("userid交换openid成功", "userIdToOpenid params userid:{},agentid:{},accessToken:{},response:{}",new Object[]{userid,agentid,accessToken,openIdRes});
+        logger.info("userid交换openid成功, userIdToOpenid params userid:{},agentid:{},accessToken:{},response:{}", userid,agentid,accessToken,openIdRes);
       return openIdRes;
     }
 
@@ -233,11 +233,11 @@ public class WxUserAPI {
             userIdRes = JSON.toJavaObject(jsonObject,UserIdRes.class);
             int rcode = userIdRes.getErrcode();
             if(rcode!=0){
-                logger.info("openid交换userid失败", "openIdToUserId params openid:{},accessToken:{},response:{}",new Object[]{openid,accessToken,userIdRes});
+                logger.info("openid交换userid失败, openIdToUserId params openid:{},accessToken:{},response:{}", openid,accessToken,userIdRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("openid交换userid成功", "openIdToUserId params openid:{},accessToken:{},response:{}",new Object[]{openid,accessToken,userIdRes});
+        logger.info("openid交换userid成功, openIdToUserId params openid:{},accessToken:{},response:{}", openid,accessToken,userIdRes);
         return userIdRes;
     }
 
@@ -255,11 +255,11 @@ public class WxUserAPI {
             response = JSON.toJavaObject(jsonObject,Response.class);
             int rcode = response.getErrcode();
             if(rcode!=0){
-                logger.info("二次验证失败", "authUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,response});
+                logger.info("二次验证失败, authUser params userid:{},accessToken:{}  response:{}", userid,accessToken,response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
         }
-        logger.info("二次验证成功", "authUser params userid:{},accessToken:{}  response:{}",new Object[]{userid,accessToken,response});
+        logger.info("二次验证成功, authUser params userid:{},accessToken:{}  response:{}", userid,accessToken,response);
         return response;
     }
 
@@ -277,10 +277,10 @@ public class WxUserAPI {
             wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
             int rcode = wxUserRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取用户信息失败", "getUserByCode params code:{},accessToken:{}  response:{}",new Object[]{code,accessToken,wxUserRes});
+                logger.info("获取用户信息失败, getUserByCode params code:{},accessToken:{}  response:{}", code,accessToken,wxUserRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("获取用户信息成功", "getUserByCode params code:{},accessToken:{}  response:{}",new Object[]{code,accessToken,wxUserRes});
+            logger.info("获取用户信息成功, getUserByCode params code:{},accessToken:{}  response:{}", code,accessToken,wxUserRes);
         }
         return wxUserRes;
     }
@@ -294,10 +294,10 @@ public class WxUserAPI {
             wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
             int rcode = wxUserRes.getErrcode();
             if(rcode!=0){
-                logger.info("获取用户详情失败", "getUserDetails params userTicket:{},accessToken:{}  response:{}",new Object[]{userTicket,accessToken,wxUserRes});
+                logger.info("获取用户详情失败, getUserDetails params userTicket:{},accessToken:{}  response:{}", userTicket,accessToken,wxUserRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("获取用户详情成功", "getUserDetails params userTicket:{},accessToken:{}  response:{}",new Object[]{userTicket,accessToken,wxUserRes});
+            logger.info("获取用户详情成功, getUserDetails params userTicket:{},accessToken:{}  response:{}", userTicket,accessToken,wxUserRes);
         }
         return wxUserRes;
     }

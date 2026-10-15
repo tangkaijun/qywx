@@ -39,10 +39,10 @@ public class WxTagAPI {
             int rcode = jo.getInteger("errcode");
             id = jo.getInteger("tagid");
             if (rcode != 0) {
-                logger.info("创建标签失败", "createTag params wxTag:{},accessToken:{}, response:{}", new Object[]{wxTag, accessToken, id});
+                logger.info("创建标签失败, createTag params wxTag:{},accessToken:{}, response:{}", wxTag, accessToken, id);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("创建标签成功", "createTag params wxTag:{},accessToken:{}, response:{}", new Object[]{wxTag, accessToken, id});
+            logger.info("创建标签成功, createTag params wxTag:{},accessToken:{}, response:{}", wxTag, accessToken, id);
         }
         return id;
     }
@@ -62,10 +62,10 @@ public class WxTagAPI {
             response = JSON.toJavaObject(jo, Response.class);
             int rcode = response.getErrcode();
             if (rcode != 0) {
-                logger.info("更新标签失败", "updateTag params wxTag:{},accessToken:{}, response:{}", new Object[]{wxTag, accessToken, response});
+                logger.info("更新标签失败, updateTag params wxTag:{},accessToken:{}, response:{}", wxTag, accessToken, response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("更新标签成功", "updateTag params wxTag:{},accessToken:{}, response:{}", new Object[]{wxTag, accessToken, response});
+            logger.info("更新标签成功, updateTag params wxTag:{},accessToken:{}, response:{}", wxTag, accessToken, response);
         }
         return response;
     }
@@ -84,10 +84,10 @@ public class WxTagAPI {
             response = JSON.toJavaObject(jo, Response.class);
             int rcode = response.getErrcode();
             if (rcode != 0) {
-                logger.info("删除标签失败", "deleteTag params tagid:{},accessToken:{}, response:{}", new Object[]{tagid, accessToken, response});
+                logger.info("删除标签失败, deleteTag params tagid:{},accessToken:{}, response:{}", tagid, accessToken, response);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("删除标签成功", "deleteTag params tagid:{},accessToken:{}, response:{}", new Object[]{tagid, accessToken, response});
+            logger.info("删除标签成功, deleteTag params tagid:{},accessToken:{}, response:{}", tagid, accessToken, response);
         }
         return response;
     }
@@ -106,10 +106,10 @@ public class WxTagAPI {
             tagRes = JSON.toJavaObject(jo, TagResp.class);
             int rcode = tagRes.getErrcode();
             if (rcode != 0) {
-                logger.info("查询标签下的用户失败", "getTagUsers params tagid:{},accessToken:{}, response:{}", new Object[]{tagid, accessToken, tagRes});
+                logger.info("查询标签下的用户失败, getTagUsers params tagid:{},accessToken:{}, response:{}", tagid, accessToken, tagRes);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("查询标签下的用户成功", "getTagUsers params tagid:{},accessToken:{}, response:{}", new Object[]{tagid, accessToken, tagRes});
+            logger.info("查询标签下的用户成功, getTagUsers params tagid:{},accessToken:{}, response:{}", tagid, accessToken, tagRes);
         }
         return tagRes;
     }
@@ -134,10 +134,10 @@ public class WxTagAPI {
                 tagRes = JSON.toJavaObject(jo, TagResp.class);
                 int rcode = tagRes.getErrcode();
                 if (rcode != 0) {
-                    logger.info("标签下新增成员失败", "addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", new Object[]{tagid,userlist,partylist,accessToken, tagRes});
+                    logger.info("标签下新增成员失败, addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", tagid,userlist,partylist,accessToken, tagRes);
                     throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
                 }
-                logger.info("标签下新增成员成功", "addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", new Object[]{tagid,userlist,partylist,accessToken, tagRes});
+                logger.info("标签下新增成员成功, addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", tagid,userlist,partylist,accessToken, tagRes);
             }
         return tagRes;
     }
@@ -162,10 +162,10 @@ public class WxTagAPI {
             tagResp = JSON.toJavaObject(jo, TagResp.class);
             int rcode = tagResp.getErrcode();
             if (rcode != 0) {
-                logger.info("删除标签下成员失败", "addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", new Object[]{tagid,userlist,partylist,accessToken, tagResp});
+                logger.info("删除标签下成员失败, addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", tagid,userlist,partylist,accessToken, tagResp);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("删除标签下成员成功", "addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", new Object[]{tagid,userlist,partylist,accessToken, tagResp});
+            logger.info("删除标签下成员成功, addTagUser params tagid:{},userlist:{},partylist:{},accessToken:{}, response:{}", tagid,userlist,partylist,accessToken, tagResp);
         }
         return tagResp;
     }
@@ -183,10 +183,10 @@ public class WxTagAPI {
             tagListResp = JSON.toJavaObject(jo, TagListResp.class);
             int rcode = tagListResp.getErrcode();
             if (rcode != 0) {
-                logger.info("查询所有标签列表失败", "getTagUsers params accessToken:{}, response:{}", new Object[]{accessToken, tagListResp});
+                logger.info("查询所有标签列表失败, getTagUsers params accessToken:{}, response:{}", accessToken, tagListResp);
                 throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
             }
-            logger.info("查询所有标签列表成功", "getTagUsers params accessToken:{}, response:{}", new Object[]{accessToken, tagListResp});
+            logger.info("查询所有标签列表成功, getTagUsers params accessToken:{}, response:{}", accessToken, tagListResp);
         }
         return tagListResp;
     }
