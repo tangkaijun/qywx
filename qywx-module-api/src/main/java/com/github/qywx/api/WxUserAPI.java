@@ -271,14 +271,15 @@ public class WxUserAPI {
      */
     public static WxUserRes getUserByCode(String code,String accessToken) throws RCodeException{
         WxUserRes wxUserRes = null;
-        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.USER_GET_URL.replace("CODE",code).replace("ACCESS_TOKEN",accessToken));
+        // 按 code 换取成员身份必须使用 user/getuserinfo，USER_GET_URL 里没有 CODE 占位符
+        HttpResult httpResult = HttpClientUtils.doGet(WxAPI.USER_GET_CODE_URL.replace("CODE",code).replace("ACCESS_TOKEN",accessToken));
         if (httpResult.getStatus() == 200) {
             JSONObject jsonObject = JSON.parseObject(httpResult.getData());
             wxUserRes = JSON.toJavaObject(jsonObject,WxUserRes.class);
-            int rcode = wxUserRes.getErrcode();
-            if(rcode!=0){
+            Integer rcode = wxUserRes.getErrcode();
+            if(rcode == null || rcode!=0){
                 logger.info("获取用户信息失败, getUserByCode params code:{},accessToken:{}  response:{}", code,accessToken,wxUserRes);
-                throw new RCodeException(rcode, WxRCode.getErrorMsg(rcode));
+                throw new RCodeException(rcode == null ? -1 : rcode, WxRCode.getErrorMsg(rcode == null ? -1 : rcode));
             }
             logger.info("获取用户信息成功, getUserByCode params code:{},accessToken:{}  response:{}", code,accessToken,wxUserRes);
         }
