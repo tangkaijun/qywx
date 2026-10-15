@@ -73,7 +73,7 @@ public class WxMediaAPI {
         MediaRes mediaRes = null;
         String json = JSON.toJSONString(news);
         HttpResult httpResult = HttpClientUtils.doPost(WxAPI.MEDIA_UPLOAD_MPNEWS_URL.replace("ACCESS_TOKEN",accessToken),json);
-        System.out.println(JSON.toJSONString(httpResult));
+        logger.debug("素材接口响应:{}", httpResult);
         if(httpResult.getStatus()!=200){
             JSONObject jo = JSON.parseObject(httpResult.getData());
             mediaRes = JSON.toJavaObject(jo,MediaRes.class);
@@ -94,7 +94,7 @@ public class WxMediaAPI {
     public static Response deleteMedia(String media_id,String accessToken) throws Exception{
         Response response = null;
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MEDIA_DELETE_URL.replace("ACCESS_TOKEN",accessToken));
-        System.out.println(JSON.toJSONString(httpResult));
+        logger.debug("素材接口响应:{}", httpResult);
         JSONObject jo = JSON.parseObject(httpResult.getData());
         response = JSON.toJavaObject(jo,Response.class);
         if(httpResult.getStatus()==200){

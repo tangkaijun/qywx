@@ -5,6 +5,8 @@ import com.github.qywx.aes.WXBizMsgCrypt;
 import com.github.qywx.core.constant.WxParam;
 import com.github.qywx.core.response.message.passive.TextMessage;
 import com.github.qywx.utils.MessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,8 @@ import java.util.Map;
  * Created by kjtang on 2017/12/15.
  */
 public class MessageService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
 
     private String msg_signature ; // 微信加密签名
@@ -37,7 +41,7 @@ public class MessageService {
         try {
             //1.解密微信发过来的消息
             String xmlMsg=this.getDecryptMsg(request);
-            System.out.println(xmlMsg);
+            logger.debug("解密后的报文长度:{}", xmlMsg == null ? 0 : xmlMsg.length());
             //2.解析微信发来的请求,解析xml字符串
             Map<String, String> requestMap= MessageUtils.parseXml(xmlMsg);
 
@@ -46,14 +50,13 @@ public class MessageService {
             String msgType = requestMap.get("MsgType");
             String eventType = requestMap.get("Event");
             String eventKey = requestMap.get("EventKey");
-            System.out.println("msgType:"+msgType);
-            System.out.println("Event:"+eventType+"  eventKey:"+eventKey);
+            logger.debug("收到回调消息, msgType:{}, eventType:{}, eventKey:{}", msgType, eventType, eventKey);
 
             //4.组装 回复文本消息
             //4.1.获取回复消息的内容 ：消息的分类处理
             String respContent=this.getRespContentByMsgType(msgType, eventType, eventKey);
             TextMessage textMessage = buildReplyTextMessage(requestMap, respContent);
-            System.out.println("respContent："+respContent);
+            logger.debug("回复内容:{}", respContent);
 
             //5.获取xml字符串： 将（被动回复消息型的）文本消息对象 转成  xml字符串
             respMessage = MessageUtils.textMessageToXml(textMessage);
@@ -64,7 +67,7 @@ public class MessageService {
             respMessage = wxcpt.EncryptMsg(respMessage, timestamp, msgType);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("处理企业微信回调消息失败", e);
         }
 
         return respMessage;
@@ -101,9 +104,9 @@ public class MessageService {
             result = wxcpt.DecryptMsg(msg_signature, timestamp, nonce, postData);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("读取企业微信回调请求体失败", e);
         } catch (AesException e) {
-            e.printStackTrace();
+            logger.error("企业微信回调消息解密或验签失败, msg_signature:{}, timestamp:{}, nonce:{}", msg_signature, timestamp, nonce, e);
         }
 
         return result;

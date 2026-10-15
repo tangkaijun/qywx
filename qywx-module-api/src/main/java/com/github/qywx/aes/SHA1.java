@@ -11,12 +11,17 @@ package com.github.qywx.aes;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * SHA1 class
  *
  * 计算公众平台的消息签名接口.
  */
 class SHA1 {
+
+        private static final Logger logger = LoggerFactory.getLogger(SHA1.class);
 
 	/**
 	 * 用SHA1算法生成安全签名
@@ -54,7 +59,7 @@ class SHA1 {
 			}
 			return hexstr.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("计算签名失败", e);
 			throw new AesException(AesException.ComputeSignatureError);
 		}
 	}

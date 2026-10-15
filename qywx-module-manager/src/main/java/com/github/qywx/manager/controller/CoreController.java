@@ -3,6 +3,8 @@ package com.github.qywx.manager.controller;
 import com.github.qywx.aes.WXBizMsgCrypt;
 import com.github.qywx.core.constant.WxParam;
 import com.github.qywx.manager.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,8 @@ import java.io.PrintWriter;
 @Controller
 public class CoreController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CoreController.class);
+
     /**
      * 验证URL
      * @param request
@@ -32,14 +36,12 @@ public class CoreController {
         String timestamp = request.getParameter("timestamp"); // 时间戳
         String nonce = request.getParameter("nonce"); // 随机数
         String echostr = request.getParameter("echostr"); // 随机字符串
-        System.out.println("msg_signature="+msg_signature+" timestamp="+timestamp+" nonce="+nonce+" echostr="+echostr);
+        logger.debug("URL 验证请求, msg_signature:{}, timestamp:{}, nonce:{}", msg_signature, timestamp, nonce);
         WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(WxParam.TOKEN, WxParam.ENCODING_AES_KEY,WxParam.CORPID);
         String result = wxcpt.VerifyURL(msg_signature, timestamp, nonce, echostr);
         PrintWriter out = response.getWriter();
-        System.out.println("result="+result);
         out.print(result);
         out.close();
-        out = null;
     }
 
     /**

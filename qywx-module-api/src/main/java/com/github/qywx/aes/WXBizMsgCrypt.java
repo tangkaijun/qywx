@@ -22,6 +22,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 提供接收和推送给公众平台消息的加解密接口(UTF8编码的字符串).
@@ -39,6 +41,8 @@ import org.apache.commons.codec.binary.Base64;
  * </ol>
  */
 public class WXBizMsgCrypt {
+
+	private static final Logger logger = LoggerFactory.getLogger(WXBizMsgCrypt.class);
 	static Charset CHARSET = Charset.forName("utf-8");
 	Base64 base64 = new Base64();
 	byte[] aesKey;
@@ -137,7 +141,7 @@ public class WXBizMsgCrypt {
 
 			return base64Encrypted;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AES 加密失败", e);
 			throw new AesException(AesException.EncryptAESError);
 		}
 	}
@@ -164,7 +168,7 @@ public class WXBizMsgCrypt {
 			// 解密
 			original = cipher.doFinal(encrypted);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("AES 解密失败", e);
 			throw new AesException(AesException.DecryptAESError);
 		}
 
@@ -182,7 +186,7 @@ public class WXBizMsgCrypt {
 			from_corpid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length),
 					CHARSET);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("解密后报文解析失败", e);
 			throw new AesException(AesException.IllegalBuffer);
 		}
 

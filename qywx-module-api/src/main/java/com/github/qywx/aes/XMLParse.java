@@ -17,6 +17,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * XMLParse class
@@ -24,6 +26,8 @@ import org.xml.sax.InputSource;
  * 提供提取消息格式中的密文及生成回复消息格式的接口.
  */
 class XMLParse {
+
+        private static final Logger logger = LoggerFactory.getLogger(XMLParse.class);
 
 	/**
 	 * 提取出xml数据包中的加密消息
@@ -48,7 +52,7 @@ class XMLParse {
 			result[2] = nodelist2.item(0).getTextContent();
 			return result;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("解析 XML 报文失败", e);
 			throw new AesException(AesException.ParseXmlError);
 		}
 	}

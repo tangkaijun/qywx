@@ -57,13 +57,12 @@ public class WxMessageAPI {
         List<String> ips = new ArrayList<>();
         HttpResult httpResult = HttpClientUtils.doGet(WxAPI.MESSAGE_SER_IP_URL.replace("ACCESS_TOKEN",accessToken));
         if(httpResult.getStatus()==200){
-            System.out.println(httpResult.getData());
             JSONObject jo = JSON.parseObject(httpResult.getData());
             Integer code = jo.getInteger("errcode");
-            System.out.println(code);
-            if(code!=0){
+            logger.debug("获取微信服务ip响应:{}", httpResult.getData());
+            if(code == null || code!=0){
                 logger.info("获取微信服务ip失败, createMenu params accessToken:{}, response:{}", accessToken,ips);
-                throw new RCodeException(code, WxRCode.getErrorMsg(code));
+                throw new RCodeException(code == null ? -1 : code, WxRCode.getErrorMsg(code == null ? -1 : code));
             }
             JSONArray jsonArray = jo.getJSONArray("ip_list");
             ips = jsonArray.toJavaList(String.class);
