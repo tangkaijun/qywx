@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 统一日志体系：slf4j 绑定到 log4j2，取代旧的 log4j 1.x properties 配置 -->
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5p] %m%n"/>
+        </Console>
+        <RollingFile name="file" fileName="./logs/qywx.log"
+                     filePattern="./logs/qywx-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="[%-5p] %d %37c %3x - %m%n"/>
+            <TimeBasedTriggeringPolicy/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Root>
+    </Loggers>
+</Configuration>

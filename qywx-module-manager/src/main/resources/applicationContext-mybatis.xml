@@ -15,8 +15,10 @@
 		<property name="minIdle" value="${druid.pool.size.min}" />
 		<property name="maxActive" value="${druid.pool.size.max}" />
 		<property name="maxWait" value="60000" />
-		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
-		<property name="filters" value="stat,wall,log4j" />
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计。
+		     日志过滤使用 log4j2（org.apache.logging.log4j），与项目统一后的日志体系一致；
+		     旧的 log4j（1.x）过滤依赖 org.apache.log4j，已随存在漏洞的组件一并移除 -->
+		<property name="filters" value="stat,wall,log4j2" />
 		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
 		<property name = "timeBetweenEvictionRunsMillis" value ="${druid.pool.timeBetweenEvictionRunsMillis}" />
 		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->

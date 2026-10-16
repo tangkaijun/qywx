@@ -16,9 +16,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.version>4.12</junit.version>
-    <httpclient.version>4.5.2</httpclient.version>
-    <fastjson.version>1.2.38</fastjson.version>
+    <junit.version>4.13.2</junit.version>
+    <httpclient.version>4.5.14</httpclient.version>
+    <fastjson.version>1.2.83</fastjson.version>
+    <log4j2.version>2.17.1</log4j2.version>
+    <dom4j.version>2.1.4</dom4j.version>
+    <xstream.version>1.4.21</xstream.version>
   </properties>
 
 
@@ -41,7 +44,7 @@
           <dependency>
               <groupId>org.apache.httpcomponents</groupId>
               <artifactId>httpmime</artifactId>
-              <version>4.5.2</version>
+              <version>${httpclient.version}</version>
           </dependency>
 
           <dependency>
@@ -50,23 +53,17 @@
               <version>${fastjson.version}</version>
           </dependency>
 
-          <!--日志配置-->
+          <!--日志配置：统一使用 log4j2（slf4j 绑定到 log4j2），移除 log4j-over-slf4j 以避免实现冲突-->
           <dependency>
               <groupId>org.apache.logging.log4j</groupId>
               <artifactId>log4j-core</artifactId>
-              <version>2.6.2</version>
-          </dependency>
-
-          <dependency>
-              <groupId>org.slf4j</groupId>
-              <artifactId>log4j-over-slf4j</artifactId>
-              <version>1.7.21</version>
+              <version>${log4j2.version}</version>
           </dependency>
 
           <dependency>
               <groupId>org.apache.logging.log4j</groupId>
               <artifactId>log4j-slf4j-impl</artifactId>
-              <version>2.6.2</version>
+              <version>${log4j2.version}</version>
           </dependency>
 
           <dependency>
@@ -76,15 +73,15 @@
           </dependency>
 
           <dependency>
-              <groupId>dom4j</groupId>
+              <groupId>org.dom4j</groupId>
               <artifactId>dom4j</artifactId>
-              <version>1.6.1</version>
+              <version>${dom4j.version}</version>
           </dependency>
 
           <dependency>
               <groupId>com.thoughtworks.xstream</groupId>
               <artifactId>xstream</artifactId>
-              <version>1.4.20</version>
+              <version>${xstream.version}</version>
           </dependency>
 
           <!--spring核心依赖开始 -->
